@@ -1,6 +1,6 @@
 #include "libcontroller.h"
 #include <QApplication>
-/*1*/
+/*Добавил новую строку в комментарий*/
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
