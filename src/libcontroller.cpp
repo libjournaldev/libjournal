@@ -6,7 +6,7 @@ LibController::LibController(QWidget *parent) :
     ui(new Ui::LibController)
 {
     ui->setupUi(this);
-    // git push me and then just touch me satisfaction
+
 }
 
 LibController::~LibController()
