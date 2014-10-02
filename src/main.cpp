@@ -1,11 +1,18 @@
-#include "libcontroller.h"
-#include <QApplication>
+#include "library.h"
+
+#include <QtCore>
+#include <QtWidgets>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    LibController w;
-    w.show();
+
+    QMainWindow mainWin;
+    mainWin.setWindowTitle(QObject::tr("LibJournal"));
+    Library lib(&mainWin);
+    mainWin.setCentralWidget(&lib);
+    mainWin.setFixedSize(lib.size());
+    mainWin.show();
 
     return a.exec();
 }

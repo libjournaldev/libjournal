@@ -13,14 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        libcontroller.cpp \
     qpsqlconnectionwidget.cpp \
-    addbookdialog.cpp
+    addbookdialog.cpp \
+    library.cpp
 
-HEADERS  += libcontroller.h \
+HEADERS  += \
     qpsqlconnectionwidget.h \
-    addbookdialog.h
+    addbookdialog.h \
+    library.h
 
-FORMS    += libcontroller.ui \
+FORMS    += \
     qpsqlconnectionwidget.ui \
-    addbookdialog.ui
+    addbookdialog.ui \
+    library.ui
