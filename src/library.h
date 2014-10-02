@@ -2,21 +2,21 @@
 #define LIBRARY_H
 
 #include <QWidget>
+#include "ui_library.h"
 
-namespace Ui {
-class Library;
-}
-
-class Library : public QWidget
+class Library : public QWidget, private Ui::Library
 {
     Q_OBJECT
 
 public:
     Library(QWidget *parent = 0);
-    ~Library();
+    virtual ~Library();
+    void somevoid();
+public slots:
+    void initConnection();
+signals:
+    void statusMessage(const QString &message);
 
-private:
-    Ui::Library *ui;
 };
 
 #endif // LIBRARY_H

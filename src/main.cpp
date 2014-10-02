@@ -11,8 +11,12 @@ int main(int argc, char *argv[])
     mainWin.setWindowTitle(QObject::tr("LibJournal"));
     Library lib(&mainWin);
     mainWin.setCentralWidget(&lib);
-    mainWin.setFixedSize(lib.size());
+    mainWin.setFixedWidth(lib.width());
+    mainWin.setFixedHeight(lib.height()+20);
+    QObject::connect(&lib, SIGNAL(statusMessage(QString)),
+                     mainWin.statusBar(), SLOT(showMessage(QString)));
     mainWin.show();
-
+    /* загружать из настроек? */
+    QMetaObject::invokeMethod(&lib, "initConnection", Qt::QueuedConnection);
     return a.exec();
 }
