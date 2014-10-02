@@ -37,24 +37,6 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="mainTab">
-    <attribute name="title">
-     <string>Главная</string>
-    </attribute>
-    <widget class="QPushButton" name="orderBookButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Оформление заявки</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QWidget" name="bookTab">
     <attribute name="title">
      <string>Книги</string>
@@ -63,7 +45,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>80</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -76,7 +58,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>140</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -96,6 +78,19 @@
      </property>
      <property name="text">
       <string>Списание книг</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="orderBookButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Оформление заявки</string>
      </property>
     </widget>
    </widget>
