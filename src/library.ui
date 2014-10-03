@@ -35,7 +35,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="bookTab">
     <attribute name="title">
@@ -138,6 +138,30 @@
      </property>
     </widget>
    </widget>
+  </widget>
+  <widget class="QToolButton" name="preferencesButton">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>9</y>
+     <width>23</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>images/gear.png</normalon>
+    </iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>22</width>
+     <height>22</height>
+    </size>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -30,6 +30,7 @@ int QPSQLConnectionDialog::port() const
 
 void QPSQLConnectionDialog::on_okButton_clicked()
 {
+
     accept();
 }
 
