@@ -26,3 +26,6 @@ FORMS    += \
     addbookdialog.ui \
     library.ui \
     qpsqlconnectiondialog.ui
+
+RESOURCES += \
+    resources.qrc

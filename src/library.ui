@@ -26,6 +26,9 @@
    <string>Form</string>
   </property>
   <widget class="QTabWidget" name="tabWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -112,6 +115,9 @@
      </property>
     </widget>
     <widget class="QPushButton" name="searchAccountButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -140,26 +146,31 @@
    </widget>
   </widget>
   <widget class="QToolButton" name="preferencesButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>215</x>
-     <y>9</y>
-     <width>23</width>
-     <height>23</height>
+     <y>0</y>
+     <width>22</width>
+     <height>30</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: none;</string>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="icon">
     <iconset>
-     <normalon>images/gear.png</normalon>
-    </iconset>
+     <normaloff>://images/gear.png</normaloff>://images/gear.png</iconset>
    </property>
    <property name="iconSize">
     <size>
-     <width>22</width>
-     <height>22</height>
+     <width>20</width>
+     <height>20</height>
     </size>
    </property>
   </widget>
