@@ -2,6 +2,7 @@
 #define LIBRARY_H
 
 #include <QWidget>
+#include <QtSql>
 #include "ui_library.h"
 
 class Library : public QWidget, private Ui::Library
@@ -11,9 +12,10 @@ class Library : public QWidget, private Ui::Library
 public:
     Library(QWidget *parent = 0);
     virtual ~Library();
-    void somevoid();
 public slots:
-    void initConnection();
+    void init();
+    QSqlError createConnection(const QString &host, const QString &user,
+                          const QString &passwd, int port);
 signals:
     void statusMessage(const QString &message);
 

@@ -20,7 +20,8 @@ SOURCES += main.cpp\
 HEADERS  += \
     addbookdialog.h \
     library.h \
-    qpsqlconnectiondialog.h
+    qpsqlconnectiondialog.h \
+    spinbox.h
 
 FORMS    += \
     addbookdialog.ui \

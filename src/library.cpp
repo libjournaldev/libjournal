@@ -6,17 +6,42 @@ Library::Library(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    /*
-    preferencesButton->setIcon(QIcon(":/images/gear.png"));
-    preferencesButton->setCheckable(false);
-    */
+    connect(preferencesButton,SIGNAL(clicked()),
+            this,SLOT(init()));
 }
 
-void Library::initConnection()
+QSqlError Library::createConnection(const QString &host, const QString &user,
+                               const QString &passwd, int port)
+{
+    QSqlError err;
+    QSqlDatabase db = QSqlDatabase::addDatabase(QString("QPSQL"),QString("libj"));
+    db.setHostName(host);
+    db.setUserName(user);
+    db.setPassword(passwd);
+    db.setPort(port);
+    db.setDatabaseName(tr("libdb"));
+    if(!db.open(user,passwd)){
+        err = db.lastError();
+    }
+    return err;
+}
+
+void Library::init()
 {
     QPSQLConnectionDialog dialog(this);
     if(dialog.exec() != QDialog::Accepted)
         return;
+    QSqlError err = createConnection(dialog.hostName(), dialog.userName(), dialog.password(),
+                                     dialog.port());
+    if(err.type() != QSqlError::NoError){
+        QMessageBox::warning(this,tr("Ошибка соединения"),tr("Не удалось соединиться с сервером "
+                                                             "баз данных: ") + err.text());
+    }
+    else{
+        emit statusMessage(tr("Соединено: %1").arg(dialog.userName()));
+    }
+
+
     /*
     QSettings conf(QSettings::NativeFormat, QSettings::UserScope,
                    "LibSoft", "LibJournal");

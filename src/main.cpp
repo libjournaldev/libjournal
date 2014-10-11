@@ -12,11 +12,11 @@ int main(int argc, char *argv[])
     Library lib(&mainWin);
     mainWin.setCentralWidget(&lib);
     mainWin.setFixedWidth(lib.width());
-    mainWin.setFixedHeight(lib.height()+20);
+    mainWin.setFixedHeight(lib.height()+15);
     QObject::connect(&lib, SIGNAL(statusMessage(QString)),
                      mainWin.statusBar(), SLOT(showMessage(QString)));
     mainWin.show();
     /* загружать из настроек? */
-    QMetaObject::invokeMethod(&lib, "initConnection", Qt::QueuedConnection);
+    QMetaObject::invokeMethod(&lib, "init", Qt::QueuedConnection);
     return a.exec();
 }

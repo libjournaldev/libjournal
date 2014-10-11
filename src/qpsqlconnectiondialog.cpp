@@ -6,6 +6,7 @@ QPSQLConnectionDialog::QPSQLConnectionDialog(QWidget *parent) :
     QDialog(parent)
 {
     ui.setupUi(this);
+    ui.userName->setFocus();
 }
 
 QString QPSQLConnectionDialog::userName() const
@@ -26,12 +27,6 @@ QString QPSQLConnectionDialog::hostName() const
 int QPSQLConnectionDialog::port() const
 {
     return ui.port->value();
-}
-
-void QPSQLConnectionDialog::on_okButton_clicked()
-{
-
-    accept();
 }
 
 QPSQLConnectionDialog::~QPSQLConnectionDialog()

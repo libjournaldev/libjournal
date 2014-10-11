@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QMessageBox>
-
 #include "ui_qpsqlconnectiondialog.h"
 
 class QPSQLConnectionDialog : public QDialog
@@ -20,7 +19,7 @@ public:
     int port() const;
 
 private slots:
-    void on_okButton_clicked();
+    void on_okButton_clicked() { accept(); }
     void on_cancelButton_clicked() { reject(); }
 
 private:
