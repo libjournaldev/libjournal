@@ -6,12 +6,16 @@ QPSQLConnectionDialog::QPSQLConnectionDialog(QWidget *parent) :
     QDialog(parent)
 {
     ui.setupUi(this);
-    ui.userName->setFocus();
 }
 
 QString QPSQLConnectionDialog::userName() const
 {
     return ui.userName->text();
+}
+
+QString QPSQLConnectionDialog::dataBase() const
+{
+    return ui.dataBase->text();
 }
 
 QString QPSQLConnectionDialog::password() const

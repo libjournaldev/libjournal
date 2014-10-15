@@ -14,7 +14,7 @@ public:
     virtual ~Library();
 public slots:
     void init();
-    QSqlError createConnection(const QString &host, const QString &user,
+    QSqlError createConnection(const QString &host, const QString &dataBase, const QString &user,
                           const QString &passwd, int port);
 signals:
     void statusMessage(const QString &message);

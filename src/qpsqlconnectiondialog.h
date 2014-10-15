@@ -12,8 +12,8 @@ class QPSQLConnectionDialog : public QDialog
 public:
     QPSQLConnectionDialog(QWidget *parent = 0);
     ~QPSQLConnectionDialog();
-
     QString userName() const;
+    QString dataBase() const;
     QString password() const;
     QString hostName() const;
     int port() const;
