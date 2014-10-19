@@ -1,7 +1,8 @@
 #include "library.h"
-#include "qpsqlconnectiondialog.h"
+#include "qsqlconnectiondialog.h"
 #include <QSettings>
 #include <QDebug>
+
 Library::Library(QWidget *parent) :
     QWidget(parent)
 {
@@ -19,7 +20,7 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     if(QSqlDatabase::contains("libj"))
         db = QSqlDatabase::database("libj");
     else
-        db = QSqlDatabase::addDatabase(QString("QPSQL"),QString("libj"));
+        db = QSqlDatabase::addDatabase(QString("QMYSQL"),QString("libj"));
     db.setHostName(host);
     db.setDatabaseName(dataBase);
     db.setUserName(user);
@@ -32,6 +33,9 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     }
     else
         emit statusMessage(tr("Соединено: %1").arg(user));
+        searchAccount = new SearchAccountDialog(this,db);
+        connect(searchAccountButton,SIGNAL(clicked()),
+                searchAccount,SLOT(show()));
     QApplication::restoreOverrideCursor();
     return err;
 }
@@ -43,7 +47,7 @@ void Library::init()
     if(iniExist && !warningAppeared && !QSqlDatabase::database("libj").isOpen())
     {
         QSettings s("server.ini",QSettings::IniFormat);
-        s.beginGroup("psqlconf");
+        s.beginGroup("SQLCONFIG");
         QSqlError err = createConnection(s.value("server").toString(),s.value("db").toString(),
                          s.value("login").toString(),s.value("password").toString(),
                          s.value("port").toInt());
@@ -58,7 +62,7 @@ void Library::init()
     }
     else
     {
-        QPSQLConnectionDialog dialog(this);
+        QSQLConnectionDialog dialog(this);
         if(dialog.exec() != QDialog::Accepted)
             return;
         QSqlError err = createConnection(dialog.hostName(), dialog.dataBase(), dialog.userName(),
@@ -73,7 +77,7 @@ void Library::init()
         else
         {
             QSettings settings("server.ini",QSettings::IniFormat);
-            settings.beginGroup("psqlconf");
+            settings.beginGroup("SQLCONFIG");
             settings.setValue("login",dialog.userName());
             settings.setValue("password",dialog.password());
             settings.setValue("server",dialog.hostName());
@@ -86,5 +90,5 @@ void Library::init()
 
 Library::~Library()
 {
-
+    delete searchAccount;
 }

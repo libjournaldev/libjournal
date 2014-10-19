@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtSql>
 #include "ui_library.h"
+#include "searchaccountdialog.h"
 
 class Library : public QWidget, private Ui::Library
 {
@@ -12,13 +13,15 @@ class Library : public QWidget, private Ui::Library
 public:
     Library(QWidget *parent = 0);
     virtual ~Library();
-public slots:
-    void init();
     QSqlError createConnection(const QString &host, const QString &dataBase, const QString &user,
                           const QString &passwd, int port);
+public slots:
+    void init();
 signals:
     void statusMessage(const QString &message);
 
+private:
+    SearchAccountDialog *searchAccount;
 };
 
 #endif // LIBRARY_H

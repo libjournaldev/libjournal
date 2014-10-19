@@ -1,17 +1,17 @@
-#ifndef QPSQLCONNECTIONDIALOG_H
-#define QPSQLCONNECTIONDIALOG_H
+#ifndef QSQLCONNECTIONDIALOG_H
+#define QSQLCONNECTIONDIALOG_H
 
 #include <QDialog>
 #include <QMessageBox>
-#include "ui_qpsqlconnectiondialog.h"
+#include "ui_qsqlconnectiondialog.h"
 
-class QPSQLConnectionDialog : public QDialog
+class QSQLConnectionDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    QPSQLConnectionDialog(QWidget *parent = 0);
-    ~QPSQLConnectionDialog();
+    QSQLConnectionDialog(QWidget *parent = 0);
+    ~QSQLConnectionDialog();
     QString userName() const;
     QString dataBase() const;
     QString password() const;
@@ -23,7 +23,7 @@ private slots:
     void on_cancelButton_clicked() { reject(); }
 
 private:
-    Ui::QPSQLConnectionDialog ui;
+    Ui::QSQLConnectionDialog ui;
 };
 
-#endif // QPSQLCONNECTIONDIALOG_H
+#endif // QSQLCONNECTIONDIALOG_H

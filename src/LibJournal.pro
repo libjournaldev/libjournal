@@ -15,18 +15,27 @@ TEMPLATE = app
 SOURCES += main.cpp\
     addbookdialog.cpp \
     library.cpp \
-    qpsqlconnectiondialog.cpp
+    deletebookdialog.cpp \
+    searchbookdialog.cpp \
+    qsqlconnectiondialog.cpp \
+    searchaccountdialog.cpp
 
 HEADERS  += \
     addbookdialog.h \
     library.h \
-    qpsqlconnectiondialog.h \
-    spinbox.h
+    spinbox.h \
+    deletebookdialog.h \
+    searchbookdialog.h \
+    qsqlconnectiondialog.h \
+    searchaccountdialog.h
 
 FORMS    += \
     addbookdialog.ui \
     library.ui \
-    qpsqlconnectiondialog.ui
+    deletebookdialog.ui \
+    searchbookdialog.ui \
+    qsqlconnectiondialog.ui \
+    searchaccountdialog.ui
 
 RESOURCES += \
     resources.qrc
