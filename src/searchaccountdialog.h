@@ -13,13 +13,15 @@ class SearchAccountDialog : public QDialog
     Q_OBJECT
 
 public:
-    SearchAccountDialog(QWidget *parent, QSqlDatabase &db);
+    SearchAccountDialog(QWidget *parent, QSqlDatabase *db);
     ~SearchAccountDialog();
+private slots:
+    void search_returnPressed();
 
 private:
     Ui::SearchAccountDialog *ui;
     QSqlQueryModel model;
-    QSqlDatabase activeDB;
+    QSqlDatabase *activeDB;
     void initModel();
 };
 

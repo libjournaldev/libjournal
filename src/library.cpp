@@ -9,14 +9,13 @@ Library::Library(QWidget *parent) :
     setupUi(this);
     connect(preferencesButton,SIGNAL(clicked()),
             this,SLOT(init()));
+    searchAccount = NULL;
 }
 
 QSqlError Library::createConnection(const QString &host, const QString &dataBase, const QString &user,
                       const QString &passwd, int port)
 {
     QApplication::setOverrideCursor(Qt::BusyCursor);
-    QSqlError err;
-    QSqlDatabase db;
     if(QSqlDatabase::contains("libj"))
         db = QSqlDatabase::database("libj");
     else
@@ -27,17 +26,17 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     db.setPassword(passwd);
     db.setPort(port);
     if(!db.open(user,passwd)){
-        err = db.lastError();
-        db = QSqlDatabase();
-        QSqlDatabase::removeDatabase("libj");
+        QApplication::restoreOverrideCursor();
+        return db.lastError();
     }
     else
         emit statusMessage(tr("Соединено: %1").arg(user));
-        searchAccount = new SearchAccountDialog(this,db);
+        if(!searchAccount)
+            searchAccount = new SearchAccountDialog(this, &db);
         connect(searchAccountButton,SIGNAL(clicked()),
                 searchAccount,SLOT(show()));
     QApplication::restoreOverrideCursor();
-    return err;
+    return QSqlError();
 }
 
 void Library::init()
@@ -90,5 +89,5 @@ void Library::init()
 
 Library::~Library()
 {
-    delete searchAccount;
+    if(searchAccount) delete searchAccount;
 }

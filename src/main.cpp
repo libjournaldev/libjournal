@@ -17,6 +17,5 @@ int main(int argc, char *argv[])
     mainWin.show();
     /* загружать из настроек? */
     QMetaObject::invokeMethod(&lib, "init", Qt::QueuedConnection);
-
     return a.exec();
 }

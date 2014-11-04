@@ -22,6 +22,7 @@ signals:
 
 private:
     SearchAccountDialog *searchAccount;
+    QSqlDatabase db;
 };
 
 #endif // LIBRARY_H
