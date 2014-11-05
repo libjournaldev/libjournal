@@ -16,7 +16,7 @@ public:
     SearchAccountDialog(QWidget *parent, QSqlDatabase *db);
     ~SearchAccountDialog();
 private slots:
-    void search_returnPressed();
+    void search_textChanged(const QString &text);
 
 private:
     Ui::SearchAccountDialog *ui;

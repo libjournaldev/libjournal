@@ -7,7 +7,7 @@ SearchAccountDialog::SearchAccountDialog(QWidget *parent, QSqlDatabase *db) :
     ui(new Ui::SearchAccountDialog)
 {
     ui->setupUi(this);
-    connect(ui->search,SIGNAL(returnPressed()),this,SLOT(search_returnPressed()));
+    connect(ui->search,SIGNAL(textChanged(QString)),this,SLOT(search_textChanged(QString)));
     activeDB = db;
     model.setQuery("select * from reader", *activeDB);
     ui->tableView->setModel(&model);
@@ -19,12 +19,12 @@ SearchAccountDialog::~SearchAccountDialog()
 }
 
 
-void SearchAccountDialog::search_returnPressed()
+void SearchAccountDialog::search_textChanged(const QString &text)
 {
     QSqlQuery q(*activeDB);
     if(!ui->search->text().isEmpty()){
         q.prepare("SELECT * FROM reader WHERE name LIKE ?");
-        q.addBindValue(tr("\%%1\%").arg(ui->search->text()));
+        q.addBindValue(tr("%1\%").arg(text));
         q.exec();
     }
     else q.exec("select * from reader");
