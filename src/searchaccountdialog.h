@@ -13,7 +13,7 @@ class SearchAccountDialog : public QDialog
     Q_OBJECT
 
 public:
-    SearchAccountDialog(QWidget *parent, QSqlDatabase *db);
+    SearchAccountDialog(QWidget *parent);
     ~SearchAccountDialog();
 private slots:
     void search_textChanged(const QString &text);
@@ -21,7 +21,8 @@ private slots:
 private:
     Ui::SearchAccountDialog *ui;
     QSqlQueryModel model;
-    QSqlDatabase *activeDB;
+    QSqlDatabase activeDB;
+    QMap<QString, QString> comboBoxMap;
     void initModel();
 };
 

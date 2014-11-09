@@ -7,8 +7,7 @@ Library::Library(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    connect(preferencesButton,SIGNAL(clicked()),
-            this,SLOT(init()));
+    connect(preferencesButton, SIGNAL(clicked()), this, SLOT(init()));
     searchAccount = NULL;
 }
 
@@ -32,7 +31,7 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     else
         emit statusMessage(tr("Соединено: %1").arg(user));
         if(!searchAccount)
-            searchAccount = new SearchAccountDialog(this, &db);
+            searchAccount = new SearchAccountDialog(this);
         connect(searchAccountButton,SIGNAL(clicked()),
                 searchAccount,SLOT(show()));
     QApplication::restoreOverrideCursor();

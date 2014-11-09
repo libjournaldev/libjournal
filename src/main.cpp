@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     QObject::connect(&lib, SIGNAL(statusMessage(QString)),
                      mainWin.statusBar(), SLOT(showMessage(QString)));
     mainWin.show();
-    /* загружать из настроек? */
     QMetaObject::invokeMethod(&lib, "init", Qt::QueuedConnection);
     return a.exec();
 }
