@@ -18,7 +18,10 @@ SOURCES += main.cpp\
     deletebookdialog.cpp \
     searchbookdialog.cpp \
     qsqlconnectiondialog.cpp \
-    searchaccountdialog.cpp
+    infobuttondelegate.cpp \
+    libjsqlmodel.cpp \
+    searchaccountwidget.cpp \
+    editaccountdialog.cpp
 
 HEADERS  += \
     addbookdialog.h \
@@ -27,7 +30,10 @@ HEADERS  += \
     deletebookdialog.h \
     searchbookdialog.h \
     qsqlconnectiondialog.h \
-    searchaccountdialog.h
+    infobuttondelegate.h \
+    libjsqlmodel.h \
+    searchaccountwidget.h \
+    editaccountdialog.h
 
 FORMS    += \
     addbookdialog.ui \
@@ -35,7 +41,8 @@ FORMS    += \
     deletebookdialog.ui \
     searchbookdialog.ui \
     qsqlconnectiondialog.ui \
-    searchaccountdialog.ui
+    searchaccountwidget.ui \
+    editaccountdialog.ui
 
 RESOURCES += \
     resources.qrc

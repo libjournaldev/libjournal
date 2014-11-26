@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QtSql>
 #include "ui_library.h"
-#include "searchaccountdialog.h"
+#include "searchaccountwidget.h"
 
 class Library : public QWidget, private Ui::Library
 {
@@ -21,7 +21,7 @@ signals:
     void statusMessage(const QString &message);
 
 private:
-    SearchAccountDialog *searchAccount;
+    SearchAccountWidget *searchAccount;
     QSqlDatabase db;
 };
 

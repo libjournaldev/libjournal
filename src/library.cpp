@@ -26,12 +26,13 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     db.setPort(port);
     if(!db.open(user,passwd)){
         QApplication::restoreOverrideCursor();
-        return db.lastError();
+        QSqlError err = db.lastError();
+        db = QSqlDatabase();
+        return err;
     }
     else
         emit statusMessage(tr("Соединено: %1").arg(user));
-        if(!searchAccount)
-            searchAccount = new SearchAccountDialog(this);
+        if(!searchAccount) searchAccount = new SearchAccountWidget();
         connect(searchAccountButton,SIGNAL(clicked()),
                 searchAccount,SLOT(show()));
     QApplication::restoreOverrideCursor();

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/gear.png</file>
-        <file>zaebalo.png</file>
+        <file>images/editAccount.png</file>
     </qresource>
 </RCC>
