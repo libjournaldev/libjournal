@@ -26,6 +26,7 @@ EditAccountDialog::EditAccountDialog(QWidget *parent, const QSqlRecord &rec) :
     ui->telephoneLineEdit->setText(rec.value("readerTelephone").toString());
     ui->birthDateEdit->setDate(rec.value("readerBirthDate").toDate());
     ui->regDateEdit->setDate(rec.value("readerRegDate").toDate());
+    ui->regDateEdit->setReadOnly(true);
     int depID = rec.value("readerDepartmentID").toInt()-1;
     ui->departmentComboBox->setCurrentIndex(depID);
 

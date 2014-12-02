@@ -1,7 +1,6 @@
 #include "searchaccountwidget.h"
 #include "ui_searchaccountwidget.h"
 #include <QDebug>
-#include "infobuttondelegate.h"
 #include "editaccountdialog.h"
 
 SearchAccountWidget::SearchAccountWidget(QWidget *parent) :
@@ -56,6 +55,7 @@ void SearchAccountWidget::search_textChanged(const QString &text)
     }
     else q.exec("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
                 "FROM readerTable");
+
     model.setQuery(q);
 }
 
@@ -81,9 +81,4 @@ void SearchAccountWidget::on_editRowAction_triggered()
     QSqlRecord rec = query.record();
     EditAccountDialog editDialog(this, rec);
     editDialog.exec();
-}
-
-void SearchAccountWidget::on_pushButton_clicked()
-{
-
 }

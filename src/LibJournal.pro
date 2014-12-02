@@ -18,8 +18,6 @@ SOURCES += main.cpp\
     deletebookdialog.cpp \
     searchbookdialog.cpp \
     qsqlconnectiondialog.cpp \
-    infobuttondelegate.cpp \
-    libjsqlmodel.cpp \
     searchaccountwidget.cpp \
     editaccountdialog.cpp
 
@@ -30,8 +28,6 @@ HEADERS  += \
     deletebookdialog.h \
     searchbookdialog.h \
     qsqlconnectiondialog.h \
-    infobuttondelegate.h \
-    libjsqlmodel.h \
     searchaccountwidget.h \
     editaccountdialog.h
 

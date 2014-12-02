@@ -3,7 +3,6 @@
 
 #include <QtWidgets>
 #include <QtSql>
-#include "libjsqlmodel.h"
 
 namespace Ui {
 class SearchAccountWidget;
@@ -23,7 +22,6 @@ public slots:
 private slots:
     void search_textChanged(const QString &text);
     void on_tableView_customContextMenuRequested(const QPoint &pos);
-    void on_pushButton_clicked();
 
 private:
     Ui::SearchAccountWidget *ui;
