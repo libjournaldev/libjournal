@@ -5,6 +5,7 @@
 #include <QtSql>
 #include "ui_library.h"
 #include "searchaccountwidget.h"
+#include "searchbookwidget.h"
 
 class Library : public QWidget, private Ui::Library
 {
@@ -22,6 +23,7 @@ signals:
 
 private:
     SearchAccountWidget *searchAccount;
+    SearchBookWidget *searchBook;
     QSqlDatabase db;
 };
 

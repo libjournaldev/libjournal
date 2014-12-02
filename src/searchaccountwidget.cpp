@@ -1,7 +1,7 @@
 #include "searchaccountwidget.h"
 #include "ui_searchaccountwidget.h"
 #include <QDebug>
-#include "infobuttondelegate.h"
+//#include "infobuttondelegate.h"
 #include "editaccountdialog.h"
 
 SearchAccountWidget::SearchAccountWidget(QWidget *parent) :

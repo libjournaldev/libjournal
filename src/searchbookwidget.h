@@ -1,21 +1,22 @@
-#ifndef SEARCHACCOUNTWIDGET_H
-#define SEARCHACCOUNTWIDGET_H
+#ifndef SEARCHBOOKWIDGET_H
+#define SEARCHBOOKWIDGET_H
 
+#include <QWidget>
 #include <QtWidgets>
 #include <QtSql>
-//#include "libjsqlmodel.h"
+#include <QButtonGroup>
 
 namespace Ui {
-class SearchAccountWidget;
+class SearchBookWidget;
 }
 
-class SearchAccountWidget : public QWidget
+class SearchBookWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    SearchAccountWidget(QWidget *parent = 0);
-    ~SearchAccountWidget();
+    explicit SearchBookWidget(QWidget *parent = 0);
+    ~SearchBookWidget();
 
 public slots:
     void on_editRowAction_triggered();
@@ -23,14 +24,14 @@ public slots:
 private slots:
     void search_textChanged(const QString &text);
     void on_tableView_customContextMenuRequested(const QPoint &pos);
-    void on_pushButton_clicked();
+
+    void on_addNewBookButton_clicked();
 
 private:
-    Ui::SearchAccountWidget *ui;
+    Ui::SearchBookWidget *ui;
     QSqlQueryModel model;
     QSqlDatabase activeDB;
     void initModel();
-
 };
 
-#endif // SEARCHACCOUNTWIDGET_H
+#endif // SEARCHBOOKWIDGET_H

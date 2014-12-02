@@ -33,8 +33,10 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     else
         emit statusMessage(tr("Соединено: %1").arg(user));
         if(!searchAccount) searchAccount = new SearchAccountWidget();
+        searchBook = new SearchBookWidget();
         connect(searchAccountButton,SIGNAL(clicked()),
                 searchAccount,SLOT(show()));
+        connect(searchBookButton,SIGNAL(clicked()),searchBook,SLOT(show()));
     QApplication::restoreOverrideCursor();
     return QSqlError();
 }
