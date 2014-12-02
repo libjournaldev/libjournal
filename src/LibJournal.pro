@@ -16,29 +16,32 @@ SOURCES += main.cpp\
     addbookdialog.cpp \
     library.cpp \
     deletebookdialog.cpp \
-    searchbookdialog.cpp \
     qsqlconnectiondialog.cpp \
     searchaccountwidget.cpp \
-    editaccountdialog.cpp
+    editaccountdialog.cpp \
+    searchbookwidget.cpp \
+    editbookdialog.cpp
 
 HEADERS  += \
     addbookdialog.h \
     library.h \
     spinbox.h \
     deletebookdialog.h \
-    searchbookdialog.h \
     qsqlconnectiondialog.h \
     searchaccountwidget.h \
-    editaccountdialog.h
+    editaccountdialog.h \
+    searchbookwidget.h \
+    editbookdialog.h
 
 FORMS    += \
     addbookdialog.ui \
     library.ui \
     deletebookdialog.ui \
-    searchbookdialog.ui \
     qsqlconnectiondialog.ui \
     searchaccountwidget.ui \
-    editaccountdialog.ui
+    editaccountdialog.ui \
+    searchbookwidget.ui \
+    editbookdialog.ui
 
 RESOURCES += \
     resources.qrc

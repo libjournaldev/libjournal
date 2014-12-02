@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>247</width>
-    <height>324</height>
+    <width>594</width>
+    <height>329</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -16,142 +16,16 @@
     <height>324</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>247</width>
-    <height>324</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>229</width>
-     <height>306</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>1</number>
-   </property>
-   <widget class="QWidget" name="bookTab">
-    <attribute name="title">
-     <string>Книги</string>
-    </attribute>
-    <widget class="QPushButton" name="searchBookButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Поиск книги</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="addBookButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>140</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Добавление книги</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="removeBookButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>201</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Списание книг</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="orderBookButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Оформление заявки</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="readerTab">
-    <attribute name="title">
-     <string>Читатели</string>
-    </attribute>
-    <widget class="QPushButton" name="createAccountButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Создание абонемента</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="searchAccountButton">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Поиск читателя</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="removeAccountButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>201</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Удаление абонемента</string>
-     </property>
-    </widget>
-   </widget>
-  </widget>
   <widget class="QToolButton" name="preferencesButton">
    <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>215</x>
+     <x>560</x>
      <y>0</y>
      <width>22</width>
      <height>30</height>
@@ -174,7 +48,99 @@
     </size>
    </property>
   </widget>
+  <widget class="QPushButton" name="searchAccountButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>150</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Читатель</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="searchBookButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>150</y>
+     <width>150</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Книга</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="requestButton">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>150</y>
+     <width>150</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Заявки</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>20</y>
+     <width>101</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resources.qrc">:/images/reader.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>30</y>
+     <width>111</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resources.qrc">:/images/request.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>10</y>
+     <width>101</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resources.qrc">:/images/book.png</pixmap>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

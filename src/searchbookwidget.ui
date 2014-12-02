@@ -1,34 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SearchAccountWidget</class>
- <widget class="QWidget" name="SearchAccountWidget">
+ <class>SearchBookWidget</class>
+ <widget class="QWidget" name="SearchBookWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
+    <width>974</width>
     <height>497</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>734</width>
-    <height>497</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Абонементы</string>
+   <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QGroupBox" name="searchGroupBox">
+      <widget class="QGroupBox" name="searchGroupGroup">
        <property name="title">
         <string>Поиск</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="5" column="0">
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="radioUDKCode">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>УДК Код</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">groupBox</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="radioBookName">
+          <property name="text">
+           <string>Название</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">groupBox</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioAuthorSurname">
+          <property name="text">
+           <string>Фамилия автора</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">groupBox</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="5" column="0" rowspan="2">
          <widget class="QLineEdit" name="search">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -50,8 +86,8 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QRadioButton" name="radioID">
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="radioBookId">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -59,37 +95,21 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>ID</string>
+           <string>Инвентарный номер</string>
           </property>
           <property name="checked">
            <bool>false</bool>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">searchRadioGroup</string>
+           <string notr="true">groupBox</string>
           </attribute>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="radioName">
+        <item row="7" column="0">
+         <widget class="QPushButton" name="addNewBookButton">
           <property name="text">
-           <string>Имя</string>
+           <string>Добавить новую книгу</string>
           </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">searchRadioGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="radioSurname">
-          <property name="text">
-           <string>Фамилия</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">searchRadioGroup</string>
-          </attribute>
          </widget>
         </item>
        </layout>
@@ -103,7 +123,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>148</height>
+         <height>348</height>
         </size>
        </property>
       </spacer>
@@ -169,7 +189,7 @@
      <normaloff>:/images/editAccount.png</normaloff>:/images/editAccount.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Редактирвать карту</string>
+    <string>&amp;Редактирвать карту книги</string>
    </property>
    <property name="toolTip">
     <string>Открыть окно редактирования карточки</string>
@@ -187,6 +207,6 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="searchRadioGroup"/>
+  <buttongroup name="groupBox"/>
  </buttongroups>
 </ui>

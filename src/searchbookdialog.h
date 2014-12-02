@@ -1,4 +1,4 @@
-#ifndef SEARCHBOOKDIALOG_H
+ifndef SEARCHBOOKDIALOG_H
 #define SEARCHBOOKDIALOG_H
 
 #include <QWidget>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>390</height>
+    <width>304</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -19,10 +19,10 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>30</y>
+     <x>10</x>
+     <y>10</y>
      <width>281</width>
-     <height>171</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -41,20 +41,33 @@
      <property name="title">
       <string>Данные об авторе</string>
      </property>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="labelAddNewAuthorBack">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
-        <width>51</width>
-        <height>21</height>
+        <y>90</y>
+        <width>31</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Фамилия:</string>
+       <string>&lt;a href=&quot;google.com&quot;&gt;Назад&lt;/a&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="labelAddNewAuthor">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>90</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;a href=&quot;google.com&quot;&gt;Добавить еще одного автора&lt;/a&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelName">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -67,126 +80,58 @@
        <string>Имя:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="labelSurname">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>80</y>
+        <y>20</y>
         <width>51</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
-       <string>Отчество:</string>
+       <string>Фамилия:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="labelAddNewAuthorForward">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>100</y>
-        <width>91</width>
+        <x>50</x>
+        <y>90</y>
+        <width>41</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Добавить автора</string>
+       <string>&lt;a href=&quot;google.com&quot;&gt;Вперед&lt;/a&gt;</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_2">
+     <widget class="QLineEdit" name="editBookAuthorSurname">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>80</x>
         <y>20</y>
-        <width>181</width>
-        <height>22</height>
+        <width>171</width>
+        <height>20</height>
        </rect>
       </property>
-      <property name="editable">
-       <bool>true</bool>
-      </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_3">
+     <widget class="QLineEdit" name="editBookAuthorName">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>80</x>
         <y>50</y>
-        <width>181</width>
-        <height>22</height>
+        <width>171</width>
+        <height>20</height>
        </rect>
       </property>
-      <property name="editable">
-       <bool>true</bool>
-      </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_4">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>80</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="editable">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Далее</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Отмена</string>
-     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2">
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Отмена</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Назад</string>
-     </property>
-    </widget>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="geometry">
       <rect>
@@ -199,7 +144,7 @@
      <property name="title">
       <string>Данные о книге</string>
      </property>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="labelBookName">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -212,7 +157,7 @@
        <string>Название:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_16">
+     <widget class="QLabel" name="labelUDK">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -225,7 +170,7 @@
        <string>УДК Код:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_17">
+     <widget class="QLabel" name="labelCategory">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -238,67 +183,36 @@
        <string>Категория:</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_13">
+     <widget class="QLineEdit" name="editBookName">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>80</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="inputMethodHints">
-       <set>Qt::ImhHiddenText</set>
-      </property>
-      <property name="editable">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBox_14">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
+        <x>80</x>
         <y>20</y>
-        <width>181</width>
-        <height>22</height>
+        <width>171</width>
+        <height>20</height>
        </rect>
       </property>
-      <property name="inputMethodHints">
-       <set>Qt::ImhHiddenText</set>
-      </property>
-      <property name="editable">
-       <bool>true</bool>
-      </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_15">
+     <widget class="QLineEdit" name="editUDKCode">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>80</x>
         <y>50</y>
-        <width>181</width>
-        <height>22</height>
+        <width>171</width>
+        <height>20</height>
        </rect>
       </property>
-      <property name="inputMethodHints">
-       <set>Qt::ImhHiddenText</set>
-      </property>
-      <property name="editable">
-       <bool>true</bool>
+     </widget>
+     <widget class="QLineEdit" name="editBookCategory">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>80</y>
+        <width>171</width>
+        <height>20</height>
+       </rect>
       </property>
      </widget>
-    </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Далее</string>
-     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_3">
@@ -314,7 +228,7 @@
      <property name="title">
       <string>Дополнительно</string>
      </property>
-     <widget class="QSpinBox" name="spinBox">
+     <widget class="QSpinBox" name="spinBoxAmountBook">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -324,7 +238,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="labelAmount">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -340,7 +254,7 @@
        <number>-2</number>
       </property>
      </widget>
-     <widget class="QLabel" name="label_11">
+     <widget class="QLabel" name="labelPhotoUpload">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -356,61 +270,79 @@
        <number>-2</number>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton">
+     <widget class="QPushButton" name="btnChoosePhoto">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>88</y>
-        <width>101</width>
-        <height>22</height>
+        <y>90</y>
+        <width>75</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>Обзор...</string>
+       <string>Выбрать...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelFilePath">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>90</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>140</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Завершить</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_7">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Отмена</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_8">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>140</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Назад</string>
-     </property>
-    </widget>
    </widget>
   </widget>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>61</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="nextButton">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>150</y>
+     <width>71</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Далее</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancelButton">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>150</y>
+     <width>61</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Отмена</string>
+   </property>
+  </widget>
+  <zorder>stackedWidget</zorder>
+  <zorder>backButton</zorder>
+  <zorder>nextButton</zorder>
+  <zorder>cancelButton</zorder>
+  <zorder>groupBox_4</zorder>
  </widget>
  <resources/>
  <connections/>
