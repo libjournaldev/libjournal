@@ -19,8 +19,8 @@ class editbookdialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit editbookdialog(QSqlRecord *rec , QWidget *parent = 0);
-    explicit editbookdialog(QWidget *parent = 0);
+    editbookdialog(QSqlRecord *rec , QWidget *parent = 0);
+    editbookdialog(QWidget *parent = 0);
     ~editbookdialog();
 
 

@@ -9,8 +9,7 @@ SearchAccountWidget::SearchAccountWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTimer::singleShot(0, ui->search, SLOT(setFocus()));
-
+    connect(ui->addAccountButton,SIGNAL(clicked()),this,SLOT(addAccount()));
     connect(ui->search,SIGNAL(textChanged(QString)),this,SLOT(search_textChanged(QString)));
 
     activeDB = QSqlDatabase::database("libj");
@@ -29,8 +28,6 @@ SearchAccountWidget::SearchAccountWidget(QWidget *parent) :
     ui->tableView->setColumnWidth(3,70);
     ui->tableView->setColumnWidth(4,115);
 
-  //InfoButtonDelegate *delegate = new InfoButtonDelegate(ui->tableView);
-  //ui->tableView->setItemDelegate(delegate);
     ui->radioID->setAccessibleName("readerID");
     ui->radioName->setAccessibleName("readerName");
     ui->radioSurname->setAccessibleName("readerSurname");
@@ -79,6 +76,36 @@ void SearchAccountWidget::on_editRowAction_triggered()
     QSqlQuery query(tr("SELECT * FROM readerTable WHERE readerID = %1").arg(readerID), activeDB);
     query.next();
     QSqlRecord rec = query.record();
-    EditAccountDialog editDialog(this, rec);
-    editDialog.exec();
+    EditAccountDialog d(this, rec);
+    if(d.exec() != QDialog::Accepted)
+        return;
+    QString updateQueryStr = QString("UPDATE readerTable SET readerSurname = '%1',"
+                                     "readerName = '%2',"
+                                     "readerMiddleName = '%3',"
+                                     "readerAdress='%4',"
+                                     "readerTelephone = '%5',"
+                                     "readerDepartmentID = %6 "
+                                     "WHERE readerID = %7")
+            .arg(d.readerSurname())
+            .arg(d.readerName())
+            .arg(d.readerMiddleName())
+            .arg(d.readerAdress())
+            .arg(d.readerTelephone())
+            .arg(d.readerDepartment())
+            .arg(readerID);
+    if(!query.exec(updateQueryStr)){
+        QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось отредактировать "
+                                                             "карту: ") + query.lastError().text());
+    }
+    else{
+        model.query().exec();
+    }
+}
+
+void SearchAccountWidget::addAccount()
+{
+    EditAccountDialog dialog(this);
+    if(dialog.exec() != QDialog::Accepted)
+        return;
+
 }

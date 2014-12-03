@@ -18,6 +18,7 @@ public:
 
 public slots:
     void on_editRowAction_triggered();
+    void addAccount();
 
 private slots:
     void search_textChanged(const QString &text);

@@ -160,6 +160,9 @@
      <property name="keyboardTracking">
       <bool>true</bool>
      </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="6" column="2">
@@ -179,10 +182,10 @@
      <property name="buttonSymbols">
       <enum>QAbstractSpinBox::NoButtons</enum>
      </property>
-     <property name="showGroupSeparator" stdset="0">
+     <property name="calendarPopup">
       <bool>false</bool>
      </property>
-     <property name="calendarPopup">
+     <property name="showGroupSeparator" stdset="0">
       <bool>false</bool>
      </property>
     </widget>
