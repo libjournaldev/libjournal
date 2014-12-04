@@ -6,5 +6,6 @@
         <file>images/book.png</file>
         <file>images/request.png</file>
         <file>images/addAccount.png</file>
+        <file>images/removeAccount.png</file>
     </qresource>
 </RCC>

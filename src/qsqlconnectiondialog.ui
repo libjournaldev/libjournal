@@ -60,6 +60,9 @@
      <height>161</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="title">
     <string>Настройки соединения</string>
    </property>

@@ -20,8 +20,11 @@ public:
     QString readerAdress() const { return adressLineEdit->text(); }
     QString readerTelephone() const { return telephoneLineEdit->text(); }
     QString readerBirthDate() const { return birthDateEdit->date().toString("yyyy-MM-dd"); }
+    QString readerRegDate() const { return regDateEdit->date().toString("yyyy-MM-dd"); }
     int readerDepartment() const { return departmentComboBox->currentIndex()+1; }
 
+private slots:
+    void on_dropAccountButton_clicked();
 };
 
 #endif // EDITACCOUNTDIALOG_H

@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QDate>
+#include <QMessageBox>
 #include <QDebug>
 
 EditAccountDialog::EditAccountDialog(QWidget *parent) :
@@ -11,6 +12,9 @@ EditAccountDialog::EditAccountDialog(QWidget *parent) :
     setupUi(this);
     setWindowIcon(QIcon(":/images/addAccount.png"));
     setWindowTitle("Новый читатель");
+    dropAccountButton->hide();
+    QRegExp re("(00)?([[3-9]\\d{1,2})(\\d{2})(\\d{7})$");
+    telephoneLineEdit->setValidator(new QRegExpValidator(re, this));
 
     regDateEdit->setDate(QDate::currentDate());
     QSqlDatabase activeDB = QSqlDatabase::database("libj");
@@ -45,10 +49,16 @@ EditAccountDialog::EditAccountDialog(QWidget *parent, const QSqlRecord &rec) :
     int depID = rec.value("readerDepartmentID").toInt()-1;
     departmentComboBox->setCurrentIndex(depID);
 
-    // birthDateEdit->date().toString("yyyy-MM-dd");
+    QRegExp re("(00)?([[3-9]\\d{1,2})(\\d{2})(\\d{7})$");
+    telephoneLineEdit->setValidator(new QRegExpValidator(re, this));
 }
 
-
+void EditAccountDialog::on_dropAccountButton_clicked()
+{
+    int ans = QMessageBox::critical(this, "Удалить карту", "Вы уверены?",
+                                    QMessageBox::Yes|QMessageBox::No);
+    if (ans == QMessageBox::Yes) emit done(-1); // -1 - код для searchaccountwidget.cpp:101
+}
 
 EditAccountDialog::~EditAccountDialog()
 {

@@ -77,35 +77,58 @@ void SearchAccountWidget::on_editRowAction_triggered()
     query.next();
     QSqlRecord rec = query.record();
     EditAccountDialog d(this, rec);
+    if(d.exec() == QDialog::Accepted){
+        QString updateQueryStr = QString("UPDATE readerTable SET readerSurname = '%1',"
+                                         "readerName = '%2',"
+                                         "readerMiddleName = '%3',"
+                                         "readerAdress='%4',"
+                                         "readerTelephone = '%5',"
+                                         "readerDepartmentID = %6 "
+                                         "WHERE readerID = %7")
+                .arg(d.readerSurname())
+                .arg(d.readerName())
+                .arg(d.readerMiddleName())
+                .arg(d.readerAdress())
+                .arg(d.readerTelephone())
+                .arg(d.readerDepartment())
+                .arg(readerID);
+        if(!query.exec(updateQueryStr)){
+            QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось отредактировать "
+                                                                 "карту: ") + query.lastError().text());
+        }
+    }
+    else if(d.result() == -1){
+        QString updateQueryStr = QString("DELETE FROM readertable WHERE readerID = %1").arg(readerID);
+        if(!query.exec(updateQueryStr)){
+            QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось отредактировать "
+                                                                 "карту: ") + query.lastError().text());
+        }
+    }
+    model.query().exec();
+}
+
+void SearchAccountWidget::addAccount()
+{
+    EditAccountDialog d(this);
+    QSqlQuery query(activeDB);
     if(d.exec() != QDialog::Accepted)
-        return;
-    QString updateQueryStr = QString("UPDATE readerTable SET readerSurname = '%1',"
-                                     "readerName = '%2',"
-                                     "readerMiddleName = '%3',"
-                                     "readerAdress='%4',"
-                                     "readerTelephone = '%5',"
-                                     "readerDepartmentID = %6 "
-                                     "WHERE readerID = %7")
+       return;
+    QString updateQueryStr = QString("INSERT INTO readerTable (readerSurname,"
+                                     "readerName,readerMiddleName,readerAdress,"
+                                     "readerTelephone,readerBirthDate,readerRegDate,"
+                                     "readerDepartmentID) VALUES "
+                                     "('%1','%2','%3','%4','%5','%6','%7',%8)")
             .arg(d.readerSurname())
             .arg(d.readerName())
             .arg(d.readerMiddleName())
             .arg(d.readerAdress())
             .arg(d.readerTelephone())
-            .arg(d.readerDepartment())
-            .arg(readerID);
+            .arg(d.readerBirthDate())
+            .arg(d.readerRegDate())
+            .arg(d.readerDepartment());
     if(!query.exec(updateQueryStr)){
-        QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось отредактировать "
+        QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось добавить "
                                                              "карту: ") + query.lastError().text());
     }
-    else{
-        model.query().exec();
-    }
-}
-
-void SearchAccountWidget::addAccount()
-{
-    EditAccountDialog dialog(this);
-    if(dialog.exec() != QDialog::Accepted)
-        return;
-
+    else model.query().exec();
 }
