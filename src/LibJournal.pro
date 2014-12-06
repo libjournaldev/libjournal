@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     searchaccountwidget.cpp \
     editaccountdialog.cpp \
     searchbookwidget.cpp \
-    editbookdialog.cpp
+    editbookdialog.cpp \
+    orderbookdialog.cpp
 
 HEADERS  += \
     addbookdialog.h \
@@ -31,7 +32,8 @@ HEADERS  += \
     searchaccountwidget.h \
     editaccountdialog.h \
     searchbookwidget.h \
-    editbookdialog.h
+    editbookdialog.h \
+    orderbookdialog.h
 
 FORMS    += \
     addbookdialog.ui \
@@ -41,7 +43,8 @@ FORMS    += \
     searchaccountwidget.ui \
     editaccountdialog.ui \
     searchbookwidget.ui \
-    editbookdialog.ui
+    editbookdialog.ui \
+    orderbookdialog.ui
 
 RESOURCES += \
     resources.qrc

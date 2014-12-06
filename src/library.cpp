@@ -2,6 +2,7 @@
 #include "qsqlconnectiondialog.h"
 #include <QSettings>
 #include <QDebug>
+#include <QPixmap>
 
 Library::Library(QWidget *parent) :
     QWidget(parent)

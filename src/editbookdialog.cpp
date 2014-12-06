@@ -2,27 +2,36 @@
 #include "ui_editbookdialog.h"
 #include <QCompleter>
 #include <qdebug>
+#include <string>
+#include <QPixmap>
 editbookdialog::editbookdialog(QSqlRecord *rec , QWidget *parent) :
     QDialog(parent),
     ui(new Ui::editbookdialog)
 {
     ui->setupUi(this);
 
-
-
-
-
-
-
     activeDB = QSqlDatabase::database("libj");
 
     initTableInfo(0);
     initTableInfo(1);
+    initTableInfo(2);
+    initTableInfo(3);
 
     ui->bookNameLineEdit->setText(rec->value("bookName").toString());
     ui->UDKCodeLineEdit->setText(rec->value("bookUDKCode").toString());
     ui->categoryLineEdit->setText(rec->value("categoryName").toString());
 
+    query = new QSqlQuery(tr("SELECT SUBSTRING(imgSource,9) FROM bookinfotable WHERE bookUDKCode = '%1'").arg(ui->UDKCodeLineEdit->text()),activeDB);
+    query->next();
+    /*О я ебу почему это не работает отсюда*/
+    QString val(query->record().value(0).toString());
+    QString picturePath(tr("C:\\images\\%1").arg(val));
+    QPixmap pict(picturePath);
+    qDebug()<<pict;
+    qDebug()<<picturePath;
+    //qDebug()<<picturePath.length();
+    ui->pictureLabel->setPixmap(pict);
+    //До этого момента
     //so fun code
 
             query = new QSqlQuery(tr("SELECT authorName,authorSurname FROM authorTable,bookConnectTable WHERE "
@@ -32,7 +41,7 @@ editbookdialog::editbookdialog(QSqlRecord *rec , QWidget *parent) :
             while(query->next()){
                 vector <QString> tmp;
                 QSqlRecord rec1 = query->record();
-                qDebug()<<query->record().value("authorSurname").toString();
+                //qDebug()<<query->record().value("authorSurname").toString();
                 tmp.push_back(rec1.value("authorSurname").toString());
                 tmp.push_back(rec1.value("authorName").toString());
                 authorNames.push_back(tmp);
@@ -75,29 +84,43 @@ void editbookdialog::initTableInfo( int fieldInit ) {
     switch( fieldInit ) {
 
         case 0 :
+            bookCategoryList.clear();
             query = new QSqlQuery( "SELECT * FROM bookCategoryTable" , activeDB ) ;
             while( query->next() ) {
                 bookCategoryList << query->value( "categoryName" ).toString() ;
             }
+            bookCategory = new QCompleter(bookCategoryList,this);
+            bookCategory->setCaseSensitivity(Qt::CaseInsensitive);
+            ui->categoryLineEdit->setCompleter(bookCategory);
             break ;
 
         case 1 :
-            query = new QSqlQuery( "SELECT * FROM authorTable" , activeDB );
+            authorSurnameList.clear();
+            query = new QSqlQuery( "SELECT * FROM authorTable GROUP BY authorSurname" , activeDB );
             while( query->next() ) {
                 authorSurnameList << query->value( "authorSurname" ).toString() ;
             }
+            completerAuthorSurname = new QCompleter(authorSurnameList,this);
+            completerAuthorSurname->setCaseSensitivity(Qt::CaseInsensitive);
+            ui->surnameLineEdit->setCompleter(completerAuthorSurname);
             break ;
 
         case 2 :
+            authorNameList.clear();
             query = new QSqlQuery( tr( "SELECT * FROM authorTable WHERE authorSurname = '%1'" ).arg( ui->surnameLineEdit->text() ) ,
                         activeDB ) ;
             while( query->next() ) {
                 authorNameList << query->value( "authorName" ).toString() ;
             }
+            completerAuthorName = new QCompleter(authorNameList,this);
+            completerAuthorName->setCaseSensitivity(Qt::CaseInsensitive);
+            ui->nameLineEdit->setCompleter(completerAuthorName);
             break ;
 
         case 3 :
-            query = new QSqlQuery( tr( "SELECT bookName,bookUDKCode FROM bookInfoTable WHERE (authorTable.authorName = '%1') and "
+            bookNameList.clear();
+            bookUDKCodeList.clear();
+            query = new QSqlQuery( tr( "SELECT bookName,bookInfoTable.bookUDKCode FROM bookInfoTable,authorTable,bookConnectTable WHERE (authorTable.authorName = '%1') and "
                      "(authorTable.authorSurname = '%2') and (bookConnectTable.authorID = authorTable.authorID) and "
                     "(bookInfoTable.bookUDKCode = bookConnectTable.bookUDKCode)" ).arg( ui->nameLineEdit->text() ,
                                                                                    ui->surnameLineEdit->text()) , activeDB ) ;
@@ -105,7 +128,64 @@ void editbookdialog::initTableInfo( int fieldInit ) {
                 bookNameList << query->value( "bookName" ).toString() ;
                 bookUDKCodeList << query->value( "bookUDKCode" ).toString() ;
             }
+
+            completerBookName = new QCompleter(bookNameList,this);
+            completerBookName->setCaseSensitivity(Qt::CaseInsensitive);
+            ui->bookNameLineEdit->setCompleter(completerBookName);
+
+            bookUDKCode = new QCompleter(bookUDKCodeList,this);
+            bookUDKCode->setCaseSensitivity(Qt::CaseInsensitive);
+            ui->UDKCodeLineEdit->setCompleter(bookUDKCode);
+
             break ;
+
+       case 4:
+            authorNameList.clear();
+            authorSurnameList.clear();
+            bookUDKCodeList.clear();
+            authorNames.clear();
+            query = new QSqlQuery(tr("SELECT authorName,authorSurname,bookInfoTable.bookUDKCode FROM authorTable,bookConnectTable,bookInfoTable WHERE "
+                                     "(bookInfoTable.bookName = '%1') and (bookConnectTable.bookUDKCode = bookInfoTable.bookUDKCode) and "
+                                     "(authorTable.authorID = bookConnectTable.authorID)").arg(ui->bookNameLineEdit->text()),activeDB);
+            while(query->next()){
+                vector <QString> tmp;
+                qDebug()<<"hello";
+                tmp.push_back(query->value("authorSurname").toString());
+                tmp.push_back(query->value("authorName").toString());
+                authorSurnameList<<query->value("authorSurname").toString();
+                authorNameList<<query->value("authorName").toString();
+                authorNames.push_back(tmp);
+                bookUDKCodeList<<query->value(2).toString();
+            }
+
+
+            this->currentAuthorBook=0;
+            ui->surnameLineEdit->setText(authorNames[0][0]);
+            ui->nameLineEdit->setText(authorNames[0][1]);
+            ui->linkBack->setVisible(false);
+            ui->linkBack->setEnabled(false);
+            if(query->size()-1!=0){
+                ui->linkForward->setVisible(true);
+                ui->linkForward->setEnabled(true);
+            }else{
+                ui->linkForward->setVisible(false);
+                ui->linkForward->setEnabled(false);
+            }
+
+            completerAuthorName = new QCompleter(authorNameList,this);
+            completerAuthorSurname = new QCompleter(authorSurnameList,this);
+            bookUDKCode = new QCompleter(bookUDKCodeList,this);
+
+            completerAuthorName->setCaseSensitivity(Qt::CaseInsensitive);
+            completerAuthorSurname->setCaseSensitivity(Qt::CaseInsensitive);
+            bookUDKCode->setCaseSensitivity(Qt::CaseInsensitive);
+
+            ui->nameLineEdit->setCompleter(completerAuthorName);
+            ui->surnameLineEdit->setCompleter(completerAuthorSurname);
+            ui->UDKCodeLineEdit->setCompleter(bookUDKCode);
+
+
+            break;
     }
 }
 
@@ -189,4 +269,22 @@ void editbookdialog::on_linkAppendAuthor_linkActivated(const QString &link)
     this->currentAuthorBook++;
     ui->linkBack->setVisible(true);
     ui->linkBack->setEnabled(true);
+}
+
+void editbookdialog::on_bookNameLineEdit_editingFinished()
+{
+    initTableInfo(4);
+}
+
+void editbookdialog::on_bookNameLineEdit_textChanged(const QString &arg1)
+{
+    bookNameList.clear();
+    query = new QSqlQuery(tr("SELECT bookName FROM bookInfoTable WHERE instr(bookName,'%1')=1").arg(ui->bookNameLineEdit->text()),activeDB);
+    while(query->next()){
+        bookNameList<<query->value(0).toString();
+    }
+    completerBookName = new QCompleter(bookNameList,this);
+    completerBookName->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->bookNameLineEdit->setCompleter(completerBookName);
+
 }
