@@ -7,5 +7,7 @@
         <file>images/request.png</file>
         <file>images/addAccount.png</file>
         <file>images/removeAccount.png</file>
+        <file>images/takenBooks.png</file>
+        <file>images/accounts.png</file>
     </qresource>
 </RCC>

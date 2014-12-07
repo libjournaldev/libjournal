@@ -2,24 +2,19 @@
 #include "ui_searchaccountwidget.h"
 #include <QDebug>
 #include "editaccountdialog.h"
+#include "accounthistory.h"
 
 SearchAccountWidget::SearchAccountWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SearchAccountWidget)
 {
     ui->setupUi(this);
-
+    setWindowIcon(QIcon(":/images/accounts.png"));
     connect(ui->addAccountButton,SIGNAL(clicked()),this,SLOT(addAccount()));
     connect(ui->search,SIGNAL(textChanged(QString)),this,SLOT(search_textChanged(QString)));
 
     activeDB = QSqlDatabase::database("libj");
-    model.setQuery("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
-                   "FROM readerTable", activeDB);
-    model.setHeaderData(0, Qt::Horizontal, tr("ID"));
-    model.setHeaderData(1, Qt::Horizontal, tr("Имя"));
-    model.setHeaderData(2, Qt::Horizontal, tr("Фамилия"));
-    model.setHeaderData(3, Qt::Horizontal, tr("Телефон"));
-    model.setHeaderData(4, Qt::Horizontal, tr("Дата регистрации"));
+    refresh();
     ui->tableView->setModel(&model);
 
     ui->tableView->setColumnWidth(0,39);
@@ -39,6 +34,17 @@ SearchAccountWidget::~SearchAccountWidget()
     delete ui;
 }
 
+void SearchAccountWidget::refresh()
+{
+    model.setQuery("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
+                   "FROM readerTable", activeDB);
+    model.setHeaderData(0, Qt::Horizontal, tr("ID"));
+    model.setHeaderData(1, Qt::Horizontal, tr("Имя"));
+    model.setHeaderData(2, Qt::Horizontal, tr("Фамилия"));
+    model.setHeaderData(3, Qt::Horizontal, tr("Телефон"));
+    model.setHeaderData(4, Qt::Horizontal, tr("Дата регистрации"));
+    model.query().exec();
+}
 
 void SearchAccountWidget::search_textChanged(const QString &text)
 {
@@ -60,9 +66,11 @@ void SearchAccountWidget::on_tableView_customContextMenuRequested(const QPoint &
 {
     QMenu contextMenu(this);
     contextMenu.addAction(ui->editRowAction);
+    contextMenu.addAction(ui->openHistory);
     QItemSelectionModel *selectionModel = ui->tableView->selectionModel();
     bool ok = selectionModel->hasSelection();
     ui->editRowAction->setEnabled(ok);
+    ui->openHistory->setEnabled(ok);
     contextMenu.exec(QCursor::pos());
 }
 
@@ -95,16 +103,30 @@ void SearchAccountWidget::on_editRowAction_triggered()
         if(!query.exec(updateQueryStr)){
             QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось отредактировать "
                                                                  "карту: ") + query.lastError().text());
+            return;
         }
     }
     else if(d.result() == -1){
         QString updateQueryStr = QString("DELETE FROM readertable WHERE readerID = %1").arg(readerID);
         if(!query.exec(updateQueryStr)){
-            QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось отредактировать "
+            QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось удалить "
                                                                  "карту: ") + query.lastError().text());
+            return;
         }
+        refresh();
     }
     model.query().exec();
+}
+
+void SearchAccountWidget::on_openHistory_triggered()
+{
+    QItemSelectionModel *selectionModel = ui->tableView->selectionModel();
+    int row = selectionModel->currentIndex().row();
+    QModelIndex primaryKeyIndex = model.index(row, 0);
+    int readerID = model.data(primaryKeyIndex).toInt();
+
+    AccountHistory wind(readerID, this);
+    wind.exec();
 }
 
 void SearchAccountWidget::addAccount()
@@ -130,5 +152,5 @@ void SearchAccountWidget::addAccount()
         QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось добавить "
                                                              "карту: ") + query.lastError().text());
     }
-    else model.query().exec();
+    else refresh();
 }

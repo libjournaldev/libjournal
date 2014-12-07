@@ -18,7 +18,9 @@ public:
 
 public slots:
     void on_editRowAction_triggered();
+    void on_openHistory_triggered();
     void addAccount();
+    void refresh();
 
 private slots:
     void search_textChanged(const QString &text);
@@ -28,7 +30,6 @@ private:
     Ui::SearchAccountWidget *ui;
     QSqlQueryModel model;
     QSqlDatabase activeDB;
-    void initModel();
 
 };
 

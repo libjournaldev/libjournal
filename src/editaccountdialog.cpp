@@ -13,6 +13,8 @@ EditAccountDialog::EditAccountDialog(QWidget *parent) :
     setWindowIcon(QIcon(":/images/addAccount.png"));
     setWindowTitle("Новый читатель");
     dropAccountButton->hide();
+    buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+
     QRegExp re("(00)?([[3-9]\\d{1,2})(\\d{2})(\\d{7})$");
     telephoneLineEdit->setValidator(new QRegExpValidator(re, this));
 
@@ -57,7 +59,7 @@ void EditAccountDialog::on_dropAccountButton_clicked()
 {
     int ans = QMessageBox::critical(this, "Удалить карту", "Вы уверены?",
                                     QMessageBox::Yes|QMessageBox::No);
-    if (ans == QMessageBox::Yes) emit done(-1); // -1 - код для searchaccountwidget.cpp:101
+    if (ans == QMessageBox::Yes) emit done(-1); // -1 - код для searchaccountwidget.cpp:106
 }
 
 EditAccountDialog::~EditAccountDialog()

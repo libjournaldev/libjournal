@@ -6,6 +6,8 @@ QSQLConnectionDialog::QSQLConnectionDialog(QWidget *parent) :
     QDialog(parent)
 {
     ui.setupUi(this);
+    setWindowIcon(QIcon(":/images/gear.png"));
+    setWindowTitle("Сервер");
 }
 
 QString QSQLConnectionDialog::userName() const
