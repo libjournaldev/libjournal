@@ -62,7 +62,7 @@ QGroupBox#groupBoxNav {
       <item>
        <widget class="QLineEdit" name="lineEdit_2">
         <property name="placeholderText">
-         <string>ebuchiy poisk</string>
+         <string/>
         </property>
        </widget>
       </item>

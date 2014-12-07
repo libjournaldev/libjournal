@@ -210,6 +210,14 @@
     <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
+  <action name="actionOrderRowAction">
+   <property name="text">
+    <string>&amp;Оформление книги</string>
+   </property>
+   <property name="toolTip">
+    <string>Оформить книгу на читателя</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources.qrc"/>

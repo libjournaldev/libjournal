@@ -38,6 +38,10 @@ private slots:
 
     void on_linkAppendAuthor_linkActivated(const QString &link);
 
+    void on_bookNameLineEdit_editingFinished();
+
+    void on_bookNameLineEdit_textChanged(const QString &arg1);
+
 private:
     Ui::editbookdialog *ui;
     QSqlDatabase activeDB;

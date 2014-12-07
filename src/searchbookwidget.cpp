@@ -74,7 +74,7 @@ void SearchBookWidget::search_textChanged(const QString &text)
         if(ui->groupBox->checkedButton()->accessibleName()=="authorSurname"){
            q.prepare(tr("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),categoryName "
                          "FROM bookInfoTable,authorTable,bookCategoryTable,bookConnectTable "
-                         "WHERE (authorTable.authorSurname=:id) and "
+                         "WHERE (INSTR(authorTable.authorSurname,:id)=1) and "
                          "(bookInfoTable.bookUDKCode = bookConnectTable.bookUDKCode) and "
                          "(bookConnectTable.authorID = authorTable.authorId) and "
                          "(bookCategoryTable.categoryID = bookInfoTable.categoryID) "
@@ -113,9 +113,11 @@ void SearchBookWidget::on_tableView_customContextMenuRequested(const QPoint &pos
 {
     QMenu contextMenu(this);
     contextMenu.addAction(ui->editRowAction);
+    contextMenu.addAction(ui->actionOrderRowAction);
     QItemSelectionModel *selectionModel = ui->tableView->selectionModel();
     bool ok = selectionModel->hasSelection();
     ui->editRowAction->setEnabled(ok);
+    ui->actionOrderRowAction->setEnabled(ok);
     contextMenu.exec(QCursor::pos());
 }
 
@@ -150,4 +152,30 @@ void SearchBookWidget::on_addNewBookButton_clicked()
 {
     editbookdialog addDialog(this);
     addDialog.exec();
+}
+
+void SearchBookWidget::on_actionOrderRowAction_triggered()
+{
+    QItemSelectionModel *selectionModel = ui->tableView->selectionModel();
+    int row = selectionModel->currentIndex().row();
+    QModelIndex primaryKeyIndex = model.index(row, 0);
+    QString bookUDKCode = model.data(primaryKeyIndex).toString();
+
+    qDebug()<<bookUDKCode;
+    QSqlQuery query(tr("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),"
+                          "categoryName FROM bookConnectTable,bookInfoTable,bookCategoryTable,authorTable "
+                          "WHERE (bookInfoTable.bookUDKCode = '%1') and "
+                          "(authorTable.authorID = bookConnectTable.authorId) and "
+                          "(bookConnectTable.bookUDKCode = bookInfoTable.bookUDKCode) and "
+                          "(bookCategoryTable.categoryID = bookInfoTable.categoryID) "
+                          "GROUP BY bookConnectTable.bookUDKCode ").arg(bookUDKCode), activeDB);
+
+    qDebug()<<query.size();
+    query.next();
+
+    QSqlRecord rec = query.record();
+
+    orderBookDialog orderDialog(&rec,this);
+
+    orderDialog.exec();
 }

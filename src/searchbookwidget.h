@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include <QtSql>
 #include <QButtonGroup>
+#include "orderbookdialog.h"
 
 namespace Ui {
 class SearchBookWidget;
@@ -26,6 +27,8 @@ private slots:
     void on_tableView_customContextMenuRequested(const QPoint &pos);
 
     void on_addNewBookButton_clicked();
+
+    void on_actionOrderRowAction_triggered();
 
 private:
     Ui::SearchBookWidget *ui;
