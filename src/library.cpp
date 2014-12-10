@@ -10,6 +10,8 @@ Library::Library(QWidget *parent) :
     setupUi(this);
     connect(preferencesButton, SIGNAL(clicked()), this, SLOT(init()));
     searchAccount = NULL;
+    searchBook = NULL;
+    requests = NULL;
 }
 
 QSqlError Library::createConnection(const QString &host, const QString &dataBase, const QString &user,
@@ -34,10 +36,12 @@ QSqlError Library::createConnection(const QString &host, const QString &dataBase
     else
         emit statusMessage(tr("Соединено: %1").arg(user));
         if(!searchAccount) searchAccount = new SearchAccountWidget();
-        searchBook = new SearchBookWidget();
-        connect(searchAccountButton,SIGNAL(clicked()),
-                searchAccount,SLOT(show()));
+        if(!searchBook) searchBook = new SearchBookWidget();
+        if(!requests) requests = new AccountHistory();
+        connect(searchAccountButton,SIGNAL(clicked()),searchAccount,SLOT(show()));
         connect(searchBookButton,SIGNAL(clicked()),searchBook,SLOT(show()));
+        connect(requestButton,SIGNAL(clicked()),requests,SLOT(show()));
+
     QApplication::restoreOverrideCursor();
     return QSqlError();
 }
@@ -93,4 +97,6 @@ void Library::init()
 Library::~Library()
 {
     if(searchAccount) delete searchAccount;
+    if(searchBook) delete searchBook;
+    if(requests) delete requests;
 }

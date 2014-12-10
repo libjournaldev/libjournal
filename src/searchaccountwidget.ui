@@ -95,7 +95,7 @@
        </layout>
       </widget>
      </item>
-     <item alignment="Qt::AlignHCenter">
+     <item>
       <widget class="QPushButton" name="addAccountButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -152,6 +152,9 @@
      <property name="editTriggers">
       <set>QAbstractItemView::AllEditTriggers</set>
      </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
@@ -201,6 +204,18 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::WindowShortcut</enum>
+   </property>
+  </action>
+  <action name="openHistory">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/takenBooks.png</normaloff>:/images/takenBooks.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;История заявок</string>
+   </property>
+   <property name="toolTip">
+    <string>История заявок</string>
    </property>
   </action>
  </widget>

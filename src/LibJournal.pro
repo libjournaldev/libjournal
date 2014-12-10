@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += sql core gui
+QT       += sql core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,8 +21,13 @@ SOURCES += main.cpp\
     editaccountdialog.cpp \
     searchbookwidget.cpp \
     editbookdialog.cpp \
+<<<<<<< HEAD
     orderbookdialog.cpp \
     searchrequestwidget.cpp
+=======
+    accounthistory.cpp \
+    orderbookdialog.cpp
+>>>>>>> origin/master
 
 HEADERS  += \
     addbookdialog.h \
@@ -34,8 +39,13 @@ HEADERS  += \
     editaccountdialog.h \
     searchbookwidget.h \
     editbookdialog.h \
+<<<<<<< HEAD
     orderbookdialog.h \
     searchrequestwidget.h
+=======
+    accounthistory.h \
+    orderbookdialog.h
+>>>>>>> origin/master
 
 FORMS    += \
     addbookdialog.ui \
@@ -46,8 +56,13 @@ FORMS    += \
     editaccountdialog.ui \
     searchbookwidget.ui \
     editbookdialog.ui \
+<<<<<<< HEAD
     orderbookdialog.ui \
     searchrequestwidget.ui
+=======
+    accounthistory.ui \
+    orderbookdialog.ui
+>>>>>>> origin/master
 
 RESOURCES += \
     resources.qrc

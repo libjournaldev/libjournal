@@ -111,19 +111,33 @@
           </attribute>
          </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="QPushButton" name="addNewBookButton">
-          <property name="text">
-           <string>Добавить новую книгу</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </item>
      <item>
+<<<<<<< HEAD
       <widget class="QGroupBox" name="groupBox_2">
        <property name="baseSize">
+=======
+      <widget class="QPushButton" name="addNewBookButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Добавить новую книгу</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+>>>>>>> origin/master
         <size>
          <width>0</width>
          <height>50</height>
@@ -254,6 +268,9 @@
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::AllEditTriggers</set>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>

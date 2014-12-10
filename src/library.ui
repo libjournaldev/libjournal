@@ -19,14 +19,25 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/images/main.png</normaloff>:/images/main.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox {
+   <string notr="true">QGroupBox#groupBoxToolbar {
 	border: 0px;
-}</string>
+}
+QGroupBox#groupBoxNav {
+	border: 0px;
+}
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="groupBoxToolbar">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
@@ -68,7 +79,9 @@
          <bool>true</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">border: none;</string>
+         <string notr="true">QToolButton {
+	border: none;
+}</string>
         </property>
         <property name="text">
          <string/>
@@ -97,7 +110,7 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="groupBoxNav">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
