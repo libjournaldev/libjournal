@@ -102,12 +102,12 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>110</width>
+          <width>117</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="placeholderText">
-         <string>Поиск заявки</string>
+         <string>Введите инв. №</string>
         </property>
         <property name="clearButtonEnabled">
          <bool>true</bool>
@@ -203,6 +203,12 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>search</tabstop>
+  <tabstop>showFullButton</tabstop>
+  <tabstop>showDebtors</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>

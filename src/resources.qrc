@@ -11,7 +11,8 @@
         <file>images/accounts.png</file>
         <file>images/main.png</file>
         <file>images/return.png</file>
-        <file>images/toReader.png</file>
         <file>images/toRoom.png</file>
+        <file>images/toReader.png</file>
+        <file>card_template.html</file>
     </qresource>
 </RCC>

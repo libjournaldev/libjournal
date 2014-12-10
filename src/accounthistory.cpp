@@ -84,20 +84,24 @@ AccountHistory::AccountHistory(int reader, QWidget *parent) :
 
 }
 
-void AccountHistory::search_textChanged(const QString &text)
+void AccountHistory::on_search_textChanged(const QString &text)
 {
-/*    QSqlQuery q(activeDB);
-    if(!ui->search->text().isEmpty()){
-        q.prepare(tr("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
-                     "FROM readerTable WHERE %1 LIKE ? LIMIT 100")
-                  .arg(ui->searchRadioGroup->checkedButton()->accessibleName()));
+    QSqlQuery q(activeDB);
+    if(!text.isEmpty()){
+        q.prepare(tr("SELECT readerID, requesttable.bookID, bookName, status, endDate "
+                     "FROM requestTable, bookCatalogueTable, bookInfoTable "
+                     "WHERE (bookCatalogueTable.bookID = requestTable.bookID) "
+                     "AND requestTable.bookID LIKE ?"
+                     "GROUP BY bookID"));
         q.addBindValue(tr("%1\%").arg(text));
         q.exec();
     }
-    else q.exec("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
-                "FROM readerTable");
+    else q.exec("SELECT readerID, requesttable.bookID, bookName, status, endDate "
+                "FROM requestTable, bookCatalogueTable, bookInfoTable "
+                "WHERE bookCatalogueTable.bookID = requestTable.bookID "
+                "GROUP BY bookID");
 
-    model.setQuery(q); */
+    model.setQuery(q);
 }
 
 void AccountHistory::on_tableView_customContextMenuRequested(const QPoint &pos)

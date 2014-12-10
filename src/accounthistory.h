@@ -32,7 +32,7 @@ public slots:
     void showDebtors();
 
 private slots:
-    void search_textChanged(const QString &text);
+    void on_search_textChanged(const QString &text);
     void on_tableView_customContextMenuRequested(const QPoint &pos);
     void markAs(int code);
     void on_markAsReturned_triggered();

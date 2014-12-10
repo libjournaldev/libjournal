@@ -1,6 +1,9 @@
 #include "searchaccountwidget.h"
 #include "ui_searchaccountwidget.h"
 #include <QDebug>
+#include <QTextEdit>
+#include <QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include "editaccountdialog.h"
 #include "accounthistory.h"
 
@@ -167,5 +170,54 @@ void SearchAccountWidget::addAccount()
     else{
         ui->search->clear();
         refresh();
+        /* pdf
+
+        QString path = QFileDialog::getSaveFileName(this, "Сохранить как", QDir::homePath(),
+                                                    "Portable document file (*.pdf)");
+        if(path.isEmpty()) return;
+
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setOutputFileName(path);
+
+        printer.setPageOrientation(QPageLayout::Landscape);
+        QPainter painter;
+        if (! painter.begin(&printer)) {
+            QMessageBox::warning(this,"Ошибка","Не удалось создать PDF");
+            return;
+        }
+        painter.drawText(0,0, "Test");
+        painter.drawRect(QRect(QPoint(0,0), QPoint(printer.width(),printer.height())));
+        painter.end();
+
+        /* /pdf */
+        QTextEdit textEdit;
+        QString initialFile = ":/card_template.html";
+
+        if (!QFile::exists(initialFile))
+            return;
+        QFile file(initialFile);
+        if (!file.open(QFile::ReadOnly))
+            return;
+
+        QByteArray data = file.readAll();
+        QTextCodec *codec = Qt::codecForHtml(data);
+        QString str = codec->toUnicode(data);
+        if (Qt::mightBeRichText(str))
+            textEdit.setHtml(str);
+
+        QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",
+                                                        QString(), "*.pdf");
+        if (!fileName.isEmpty()) {
+            if (QFileInfo(fileName).suffix().isEmpty())
+                fileName.append(".pdf");
+            QPrinter printer(QPrinter::HighResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setOrientation(QPrinter::Landscape);
+            printer.setPageSize(QPrinter::A6);
+            printer.setOutputFileName(fileName);
+
+            textEdit.document()->print(&printer);
+        }
     }
 }
