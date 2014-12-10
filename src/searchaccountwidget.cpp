@@ -26,7 +26,7 @@ SearchAccountWidget::SearchAccountWidget(QWidget *parent) :
     ui->radioID->setAccessibleName("readerID");
     ui->radioName->setAccessibleName("readerName");
     ui->radioSurname->setAccessibleName("readerSurname");
-
+    connect(ui->searchRadioGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(refresh(QAbstractButton*)));
 }
 
 SearchAccountWidget::~SearchAccountWidget()
@@ -34,22 +34,34 @@ SearchAccountWidget::~SearchAccountWidget()
     delete ui;
 }
 
-void SearchAccountWidget::refresh()
+void SearchAccountWidget::refresh(QAbstractButton *radio)
 {
-    model.setQuery("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
-                   "FROM readerTable", activeDB);
-    model.setHeaderData(0, Qt::Horizontal, tr("ID"));
-    model.setHeaderData(1, Qt::Horizontal, tr("Имя"));
-    model.setHeaderData(2, Qt::Horizontal, tr("Фамилия"));
-    model.setHeaderData(3, Qt::Horizontal, tr("Телефон"));
-    model.setHeaderData(4, Qt::Horizontal, tr("Дата регистрации"));
-    model.query().exec();
+    QSqlQuery q(activeDB);
+    QString searchStr = ui->search->text();
+    if(radio && !searchStr.isEmpty()){
+        q.prepare(tr("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
+                     "FROM readerTable WHERE %1 LIKE ? LIMIT 100")
+                  .arg(radio->accessibleName()));
+        q.addBindValue(tr("%1\%").arg(searchStr));
+        q.exec();
+        model.setQuery(q);
+    }
+    else{
+        model.setQuery("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
+                       "FROM readerTable", activeDB);
+        model.setHeaderData(0, Qt::Horizontal, tr("ID"));
+        model.setHeaderData(1, Qt::Horizontal, tr("Имя"));
+        model.setHeaderData(2, Qt::Horizontal, tr("Фамилия"));
+        model.setHeaderData(3, Qt::Horizontal, tr("Телефон"));
+        model.setHeaderData(4, Qt::Horizontal, tr("Дата регистрации"));
+        model.query().exec();
+    }
 }
 
 void SearchAccountWidget::search_textChanged(const QString &text)
 {
     QSqlQuery q(activeDB);
-    if(!ui->search->text().isEmpty()){
+    if(!text.isEmpty()){
         q.prepare(tr("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
                      "FROM readerTable WHERE %1 LIKE ? LIMIT 100")
                   .arg(ui->searchRadioGroup->checkedButton()->accessibleName()));
@@ -58,7 +70,6 @@ void SearchAccountWidget::search_textChanged(const QString &text)
     }
     else q.exec("SELECT readerID, readerName, readerSurname, readerTelephone, readerRegDate "
                 "FROM readerTable");
-
     model.setQuery(q);
 }
 
@@ -113,6 +124,7 @@ void SearchAccountWidget::on_editRowAction_triggered()
                                                                  "карту: ") + query.lastError().text());
             return;
         }
+        ui->search->clear();
         refresh();
     }
     model.query().exec();
@@ -152,5 +164,8 @@ void SearchAccountWidget::addAccount()
         QMessageBox::warning(this,tr("Ошибка базы данных"),tr("Не удалось добавить "
                                                              "карту: ") + query.lastError().text());
     }
-    else refresh();
+    else{
+        ui->search->clear();
+        refresh();
+    }
 }

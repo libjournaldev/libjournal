@@ -6,6 +6,7 @@
 #include "ui_library.h"
 #include "searchaccountwidget.h"
 #include "searchbookwidget.h"
+#include "accounthistory.h"
 
 class Library : public QWidget, private Ui::Library
 {
@@ -24,6 +25,7 @@ signals:
 private:
     SearchAccountWidget *searchAccount;
     SearchBookWidget *searchBook;
+    AccountHistory *requests;
     QSqlDatabase db;
 };
 

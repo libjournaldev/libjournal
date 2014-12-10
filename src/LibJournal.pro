@@ -21,7 +21,7 @@ SOURCES += main.cpp\
     editaccountdialog.cpp \
     searchbookwidget.cpp \
     editbookdialog.cpp \
-    accounthistory.cpp
+    accounthistory.cpp \
     orderbookdialog.cpp
 
 HEADERS  += \
@@ -34,7 +34,7 @@ HEADERS  += \
     editaccountdialog.h \
     searchbookwidget.h \
     editbookdialog.h \
-    accounthistory.h
+    accounthistory.h \
     orderbookdialog.h
 
 FORMS    += \
@@ -46,7 +46,7 @@ FORMS    += \
     editaccountdialog.ui \
     searchbookwidget.ui \
     editbookdialog.ui \
-    accounthistory.ui
+    accounthistory.ui \
     orderbookdialog.ui
 
 RESOURCES += \

@@ -9,5 +9,9 @@
         <file>images/removeAccount.png</file>
         <file>images/takenBooks.png</file>
         <file>images/accounts.png</file>
+        <file>images/main.png</file>
+        <file>images/return.png</file>
+        <file>images/toReader.png</file>
+        <file>images/toRoom.png</file>
     </qresource>
 </RCC>

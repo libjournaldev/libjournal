@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
 
     QMainWindow mainWin;
     mainWin.setWindowTitle(QObject::tr("LibJournal"));
+    mainWin.setWindowIcon(QIcon(":/images/main.png"));
     Library lib(&mainWin);
     mainWin.setCentralWidget(&lib);
     mainWin.setFixedWidth(lib.width());

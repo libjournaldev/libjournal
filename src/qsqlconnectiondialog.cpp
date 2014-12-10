@@ -1,6 +1,9 @@
 #include "qsqlconnectiondialog.h"
 
 #include <QSqlDatabase>
+#include <QFileInfo>
+#include <QDir>
+#include <QSettings>
 
 QSQLConnectionDialog::QSQLConnectionDialog(QWidget *parent) :
     QDialog(parent)
@@ -8,6 +11,16 @@ QSQLConnectionDialog::QSQLConnectionDialog(QWidget *parent) :
     ui.setupUi(this);
     setWindowIcon(QIcon(":/images/gear.png"));
     setWindowTitle("Сервер");
+    bool iniExist = QFileInfo(QDir::currentPath(),"server.ini").exists();
+    if(iniExist){
+        QSettings s("server.ini",QSettings::IniFormat);
+        s.beginGroup("SQLCONFIG");
+        ui.hostName->setText(s.value("server").toString());
+        ui.dataBase->setText(s.value("db").toString());
+        ui.userName->setText(s.value("login").toString());
+        ui.port->setValue(s.value("port").toInt());
+        s.endGroup();
+    }
 }
 
 QString QSQLConnectionDialog::userName() const

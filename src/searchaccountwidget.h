@@ -20,7 +20,7 @@ public slots:
     void on_editRowAction_triggered();
     void on_openHistory_triggered();
     void addAccount();
-    void refresh();
+    void refresh(QAbstractButton *radio = 0);
 
 private slots:
     void search_textChanged(const QString &text);
