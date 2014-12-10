@@ -3,7 +3,7 @@
 
 #include <QtWidgets>
 #include <QtSql>
-
+#include <QSqlRecord>
 namespace Ui {
 class SearchAccountWidget;
 }

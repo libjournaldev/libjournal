@@ -42,10 +42,18 @@ private slots:
 
     void on_bookNameLineEdit_textChanged(const QString &arg1);
 
+    void on_editbookdialog_accepted();
+
+    void on_buttonBox_accepted();
+
+    void on_deleteBtn_clicked();
+
 private:
     Ui::editbookdialog *ui;
     QSqlDatabase activeDB;
     int currentAuthorBook;
+    int mode; //0 - add
+    //QString path;
     QSqlQuery *query;
     QCompleter *completerAuthorName;
     QCompleter *completerAuthorSurname;
@@ -57,8 +65,10 @@ private:
     QStringList bookNameList;
     QStringList bookCategoryList;
     QStringList bookUDKCodeList;
+    vector <QString> defaultAuthorName;
+    vector <QString> defaultAuthorSurname;
     vector < vector <QString> > authorNames;
-
+    QString path;
 };
 
 #endif // EDITBOOKDIALOG_H

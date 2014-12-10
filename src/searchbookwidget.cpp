@@ -11,18 +11,25 @@ SearchBookWidget::SearchBookWidget(QWidget *parent) :
     QTimer::singleShot(0, ui->search, SLOT(setFocus()));
     connect(ui->search,SIGNAL(textChanged(QString)),this,SLOT(search_textChanged(QString)));
     activeDB = QSqlDatabase::database("libj");
+    query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                          "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                          activeDB);
+
     model.setQuery("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),"
-                   "categoryName FROM bookConnectTable,bookInfoTable,bookCategoryTable,authorTable "
+                   "categoryName "
+                   "FROM bookConnectTable,bookInfoTable,bookCategoryTable,authorTable "
                    "WHERE (authorTable.authorID = bookConnectTable.authorId) and "
                    "(bookInfoTable.bookUDKCode = bookConnectTable.bookUDKCode) and "
                    "(bookCategoryTable.categoryID = bookInfoTable.categoryID) "
-                   "GROUP BY bookConnectTable.bookUDKCode LIMIT 200",activeDB);
+                   "GROUP BY bookConnectTable.bookUDKCode "
+                   "ORDER BY bookName LIMIT 200 "
+                   ,activeDB);
     ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     model.setHeaderData(0, Qt::Horizontal, tr("УДК Код"));
     model.setHeaderData(1, Qt::Horizontal, tr("Название книги"));
     model.setHeaderData(2, Qt::Horizontal, tr("Автор(ы)"));
     model.setHeaderData(3, Qt::Horizontal, tr("Категория"));
-
+    model.query().exec();
     ui->tableView->setModel(&model);
     ui->tableView->setColumnWidth(0,120);
     ui->tableView->setColumnWidth(1,250);
@@ -34,6 +41,7 @@ SearchBookWidget::SearchBookWidget(QWidget *parent) :
     ui->radioUDKCode->setAccessibleName("bookUDKCode");
     ui->radioBookName->setAccessibleName("bookName");
 
+    refreshStatistic();
 
 }
 
@@ -47,6 +55,9 @@ void SearchBookWidget::search_textChanged(const QString &text)
     QSqlQuery q(activeDB);
     if(!ui->search->text().isEmpty()){
         if(ui->groupBox->checkedButton()->accessibleName()=="bookUDKCode"){
+            query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                                  "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                                  activeDB);
             q.prepare(tr("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),"
                      "categoryName FROM bookConnectTable,bookInfoTable,bookCategoryTable,authorTable "
                      "WHERE (authorTable.authorID = bookConnectTable.authorId) and "
@@ -59,6 +70,9 @@ void SearchBookWidget::search_textChanged(const QString &text)
         }
 
         if(ui->groupBox->checkedButton()->accessibleName()=="bookId"){
+           query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                                  "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                                  activeDB);
            q.prepare(tr("SELECT bookCatalogueTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),categoryName "
                          "FROM bookInfoTable,authorTable,bookCategoryTable,bookConnectTable,bookCatalogueTable "
                          "WHERE (bookCatalogueTable.bookID = :id) and "
@@ -72,6 +86,9 @@ void SearchBookWidget::search_textChanged(const QString &text)
          }
 
         if(ui->groupBox->checkedButton()->accessibleName()=="authorSurname"){
+           query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                                  "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                                  activeDB);
            q.prepare(tr("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),categoryName "
                          "FROM bookInfoTable,authorTable,bookCategoryTable,bookConnectTable "
                          "WHERE (INSTR(authorTable.authorSurname,:id)=1) and "
@@ -84,6 +101,9 @@ void SearchBookWidget::search_textChanged(const QString &text)
          }
 
         if(ui->groupBox->checkedButton()->accessibleName()=="bookName"){
+            query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                                  "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                                  activeDB);
             q.prepare(tr("SELECT bookInfoTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),"
                      "categoryName FROM bookInfoTable,bookConnectTable,authorTable,bookCategoryTable "
                      "WHERE (instr(bookInfoTable.bookName,:id)=1) and "
@@ -98,6 +118,9 @@ void SearchBookWidget::search_textChanged(const QString &text)
         model.setQuery(q);
     }
     else{
+        query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                              "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                              activeDB);
         q.prepare("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),"
                   "categoryName FROM bookConnectTable,bookInfoTable,bookCategoryTable,authorTable "
                   "WHERE (authorTable.authorID = bookConnectTable.authorId) and "
@@ -146,12 +169,19 @@ void SearchBookWidget::on_editRowAction_triggered()
     editbookdialog editDialog(&rec,this);
 
     editDialog.exec();
+    refreshStatistic();
+    model.query().exec();
 }
 
 void SearchBookWidget::on_addNewBookButton_clicked()
 {
     editbookdialog addDialog(this);
     addDialog.exec();
+    refreshStatistic();
+    query = new QSqlQuery("DELETE FROM bookInfoTable WHERE bookUDKCode NOT IN "
+                          "(SELECT bookUDKCode FROM bookCatalogueTable GROUP BY bookUDKCode)",
+                          activeDB);
+    model.query().exec();
 }
 
 void SearchBookWidget::on_actionOrderRowAction_triggered()
@@ -161,7 +191,6 @@ void SearchBookWidget::on_actionOrderRowAction_triggered()
     QModelIndex primaryKeyIndex = model.index(row, 0);
     QString bookUDKCode = model.data(primaryKeyIndex).toString();
 
-    qDebug()<<bookUDKCode;
     QSqlQuery query(tr("SELECT bookConnectTable.bookUDKCode,bookName,GROUP_CONCAT(authorSurname),"
                           "categoryName FROM bookConnectTable,bookInfoTable,bookCategoryTable,authorTable "
                           "WHERE (bookInfoTable.bookUDKCode = '%1') and "
@@ -170,7 +199,6 @@ void SearchBookWidget::on_actionOrderRowAction_triggered()
                           "(bookCategoryTable.categoryID = bookInfoTable.categoryID) "
                           "GROUP BY bookConnectTable.bookUDKCode ").arg(bookUDKCode), activeDB);
 
-    qDebug()<<query.size();
     query.next();
 
     QSqlRecord rec = query.record();
@@ -178,4 +206,28 @@ void SearchBookWidget::on_actionOrderRowAction_triggered()
     orderBookDialog orderDialog(&rec,this);
 
     orderDialog.exec();
+    model.query().exec();
+    refreshStatistic();
+}
+
+
+void SearchBookWidget::refreshStatistic(){
+    query = new QSqlQuery("SELECT COUNT(bookID) FROM bookCatalogueTable",activeDB);
+    query->next();
+    ui->labelBookAmount->setText(query->record().value(0).toString());
+    query = new QSqlQuery("SELECT COUNT(bookID) FROM requestTable WHERE status='на руках'",activeDB);
+    query->next();
+    ui->labelOnHandBook->setText(query->record().value(0).toString());
+    double i = ui->labelOnHandBook->text().toDouble();
+    double j = ui->labelBookAmount->text().toDouble();
+    i/=j;
+    i*=100;
+    ui->labelPercentage->setText(QString::number(i) + "%");
+
+}
+
+void SearchBookWidget::on_SearchBookWidget_destroyed()
+{
+    model.query().exec();
+    refreshStatistic();
 }

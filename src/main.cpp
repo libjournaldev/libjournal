@@ -1,6 +1,7 @@
 #include "library.h"
 #include <QtCore>
 #include <QtWidgets>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {

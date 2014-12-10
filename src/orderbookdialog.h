@@ -5,6 +5,7 @@
 #include <QSqlRecord>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
+#include "searchaccountwidget.h"
 namespace Ui {
 class orderBookDialog;
 }
@@ -17,10 +18,14 @@ public:
     explicit orderBookDialog(QSqlRecord *rec , QWidget *parent);
     ~orderBookDialog();
 
+private slots:
+    void on_orderBookDialog_accepted();
+
 private:
     Ui::orderBookDialog *ui;
     QSqlDatabase activeDB;
     QSqlQueryModel model;
+    QSqlQuery *query;
 };
 
 #endif // ORDERBOOKDIALOG_H

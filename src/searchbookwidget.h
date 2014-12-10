@@ -6,6 +6,7 @@
 #include <QtSql>
 #include <QButtonGroup>
 #include "orderbookdialog.h"
+#include <QSqlQuery>
 
 namespace Ui {
 class SearchBookWidget;
@@ -30,11 +31,15 @@ private slots:
 
     void on_actionOrderRowAction_triggered();
 
+    void on_SearchBookWidget_destroyed();
+
 private:
     Ui::SearchBookWidget *ui;
     QSqlQueryModel model;
     QSqlDatabase activeDB;
     void initModel();
+    void refreshStatistic();
+    QSqlQuery *query;
 };
 
 #endif // SEARCHBOOKWIDGET_H
