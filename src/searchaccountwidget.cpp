@@ -1,7 +1,7 @@
 #include "searchaccountwidget.h"
 #include "ui_searchaccountwidget.h"
 #include <QDebug>
-#include <QTextEdit>
+#include <QTextDocument>
 #include <QPrinter>
 #include <QtPrintSupport/QPrinter>
 #include "editaccountdialog.h"
@@ -170,28 +170,8 @@ void SearchAccountWidget::addAccount()
     else{
         ui->search->clear();
         refresh();
-        /* pdf
 
-        QString path = QFileDialog::getSaveFileName(this, "Сохранить как", QDir::homePath(),
-                                                    "Portable document file (*.pdf)");
-        if(path.isEmpty()) return;
-
-        QPrinter printer(QPrinter::HighResolution);
-        printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setOutputFileName(path);
-
-        printer.setPageOrientation(QPageLayout::Landscape);
-        QPainter painter;
-        if (! painter.begin(&printer)) {
-            QMessageBox::warning(this,"Ошибка","Не удалось создать PDF");
-            return;
-        }
-        painter.drawText(0,0, "Test");
-        painter.drawRect(QRect(QPoint(0,0), QPoint(printer.width(),printer.height())));
-        painter.end();
-
-        /* /pdf */
-        QTextEdit textEdit;
+        QTextDocument card;
         QString initialFile = ":/card_template.html";
 
         if (!QFile::exists(initialFile))
@@ -203,21 +183,41 @@ void SearchAccountWidget::addAccount()
         QByteArray data = file.readAll();
         QTextCodec *codec = Qt::codecForHtml(data);
         QString str = codec->toUnicode(data);
-        if (Qt::mightBeRichText(str))
-            textEdit.setHtml(str);
 
+        query.exec(tr("SELECT departmentShortName "
+                      "FROM departmentTable "
+                      "WHERE departmentID = %1").arg(d.readerDepartment()));
+        query.next();
+        QString depShortName = query.record().value(0).toString();
+        query.exec("SELECT MAX(readerID) FROM readerTable");
+        query.next();
+        int readerID = query.record().value(0).toInt();
+
+        str.replace("%surname%",d.readerSurname());
+        str.replace("%name",d.readerName());
+        str.replace("%middlename%",d.readerMiddleName());
+        str.replace("%department%",depShortName);
+        str.replace("%readerid%",tr("Билет №%1").arg(readerID));
+
+        if (Qt::mightBeRichText(str))
+            card.setHtml(str);
         QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",
                                                         QString(), "*.pdf");
         if (!fileName.isEmpty()) {
             if (QFileInfo(fileName).suffix().isEmpty())
                 fileName.append(".pdf");
-            QPrinter printer(QPrinter::HighResolution);
+            QPrinter printer(QPrinter::ScreenResolution);
             printer.setOutputFormat(QPrinter::PdfFormat);
             printer.setOrientation(QPrinter::Landscape);
-            printer.setPageSize(QPrinter::A6);
+            printer.setPaperSize(QPrinter::A7);
             printer.setOutputFileName(fileName);
 
-            textEdit.document()->print(&printer);
+            QSizeF paperSize;
+            paperSize.setWidth(printer.width());
+            paperSize.setHeight(printer.height());
+            card.setPageSize(paperSize);
+
+            card.print(&printer);
         }
     }
 }

@@ -24,7 +24,6 @@ EditAccountDialog::EditAccountDialog(QWidget *parent) :
     QSqlQuery q("SELECT * FROM departmentTable",activeDB);
     while(q.next()) departments << q.value("departmentFullName").toString();
     departmentComboBox->addItems(departments);
-
 }
 
 EditAccountDialog::EditAccountDialog(QWidget *parent, const QSqlRecord &rec) :

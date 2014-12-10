@@ -21,6 +21,7 @@ AccountHistory::AccountHistory(QWidget *parent) :
     model.setQuery("SELECT readerID, requesttable.bookID, bookName, status, endDate "
                    "FROM requestTable, bookCatalogueTable, bookInfoTable "
                    "WHERE bookCatalogueTable.bookID = requestTable.bookID "
+                   "AND bookinfotable.bookUDKCode = bookcataloguetable.bookUDKCode "
                    "GROUP BY bookID", activeDB);
     ui->tableView->setModel(&model);
 
@@ -41,6 +42,7 @@ void AccountHistory::showFullHistory()
     model.setQuery("SELECT readerID, requesttable.bookID, bookName, status, endDate "
                    "FROM requestTable, bookCatalogueTable, bookInfoTable "
                    "WHERE bookCatalogueTable.bookID = requestTable.bookID "
+                   "AND bookinfotable.bookUDKCode = bookcataloguetable.bookUDKCode "
                    "GROUP BY bookID", activeDB);
     model.query().exec();
 }
@@ -50,7 +52,9 @@ void AccountHistory::showDebtors()
     model.setQuery("SELECT readerID, requesttable.bookID, bookName, status, endDate "
                    "FROM requestTable, bookCatalogueTable, bookInfoTable "
                    "WHERE bookCatalogueTable.bookID = requestTable.bookID "
+                   "AND bookinfotable.bookUDKCode = bookcataloguetable.bookUDKCode "
                    "AND CURDATE() > endDate "
+                   "AND status > 0 "
                    "GROUP BY bookID", activeDB);
     model.query().exec();
 }
@@ -67,10 +71,10 @@ AccountHistory::AccountHistory(int reader, QWidget *parent) :
     activeDB = QSqlDatabase::database("libj");
 
     model.setQuery(tr("SELECT requesttable.bookID, bookName, status, endDate "
-                       "FROM requestTable, bookCatalogueTable, bookInfoTable "
-                       "WHERE (bookCatalogueTable.bookID = requestTable.bookID) "
-                       "AND (bookInfoTable.bookUDKCode = bookCatalogueTable.bookUDKCode)"
-                       "AND requestTable.readerID = %1").arg(reader), activeDB);
+                      "FROM requestTable, bookCatalogueTable, bookInfoTable "
+                      "WHERE (bookCatalogueTable.bookID = requestTable.bookID) "
+                      "AND (bookInfoTable.bookUDKCode = bookCatalogueTable.bookUDKCode)"
+                      "AND requestTable.readerID = %1").arg(reader), activeDB);
     ui->tableView->setModel(&model);
 
     ui->tableView->setColumnWidth(0,55);
@@ -81,7 +85,6 @@ AccountHistory::AccountHistory(int reader, QWidget *parent) :
     model.setHeaderData(1, Qt::Horizontal, tr("Название книги"));
     model.setHeaderData(2, Qt::Horizontal, tr("Состояние"));
     model.setHeaderData(3, Qt::Horizontal, tr("Срок возврата"));
-
 }
 
 void AccountHistory::on_search_textChanged(const QString &text)
@@ -90,7 +93,8 @@ void AccountHistory::on_search_textChanged(const QString &text)
     if(!text.isEmpty()){
         q.prepare(tr("SELECT readerID, requesttable.bookID, bookName, status, endDate "
                      "FROM requestTable, bookCatalogueTable, bookInfoTable "
-                     "WHERE (bookCatalogueTable.bookID = requestTable.bookID) "
+                     "WHERE bookCatalogueTable.bookID = requestTable.bookID "
+                     "AND bookinfotable.bookUDKCode = bookcataloguetable.bookUDKCode "
                      "AND requestTable.bookID LIKE ?"
                      "GROUP BY bookID"));
         q.addBindValue(tr("%1\%").arg(text));
@@ -175,7 +179,7 @@ QVariant AccountHistorySqlModel::data(const QModelIndex &index, int role) const
         QDate endDate = QSqlQueryModel::data(dateIndex).toDate();
         int status = QSqlQueryModel::data(statusIndex).toInt();
         bool owed = (QDate::currentDate() > endDate);
-        bool onHands = (status == 1); // если на руках
+        bool onHands = (status == 1);
         if (role == Qt::BackgroundRole){
             if(owed && onHands) return QBrush(QColor(255, 133, 96, 190));
             else if(!owed && onHands) return QBrush(QColor(100, 172, 255, 190));
