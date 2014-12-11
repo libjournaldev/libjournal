@@ -21,13 +21,10 @@ SOURCES += main.cpp\
     editaccountdialog.cpp \
     searchbookwidget.cpp \
     editbookdialog.cpp \
-<<<<<<< HEAD
     orderbookdialog.cpp \
-    searchrequestwidget.cpp
-=======
-    accounthistory.cpp \
-    orderbookdialog.cpp
->>>>>>> origin/master
+    searchrequestwidget.cpp \
+    accounthistory.cpp
+
 
 HEADERS  += \
     addbookdialog.h \
@@ -39,13 +36,9 @@ HEADERS  += \
     editaccountdialog.h \
     searchbookwidget.h \
     editbookdialog.h \
-<<<<<<< HEAD
     orderbookdialog.h \
-    searchrequestwidget.h
-=======
+    searchrequestwidget.h \
     accounthistory.h \
-    orderbookdialog.h
->>>>>>> origin/master
 
 FORMS    += \
     addbookdialog.ui \
@@ -56,13 +49,12 @@ FORMS    += \
     editaccountdialog.ui \
     searchbookwidget.ui \
     editbookdialog.ui \
-<<<<<<< HEAD
     orderbookdialog.ui \
-    searchrequestwidget.ui
-=======
+    searchrequestwidget.ui \
     accounthistory.ui \
-    orderbookdialog.ui
->>>>>>> origin/master
+
 
 RESOURCES += \
     resources.qrc
+
+OTHER_FILES +=

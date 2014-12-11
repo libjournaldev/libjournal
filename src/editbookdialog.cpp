@@ -72,11 +72,11 @@ editbookdialog::editbookdialog( QSqlRecord *rec , QWidget *parent ) :
                       " WHERE (status!='Читальный зал' AND "
                       " status!='На руках'))")
                    .arg(ui->UDKCodeLineEdit->text()),activeDB);
-    model->query().exec();
-
+    model->query().exec();    
+    ui->tableView->setModel(model);
+    ui->tableView->setColumnWidth(0,300);
     ui->tableView->verticalHeader()->hide();
     ui->tableView->horizontalHeader()->hide();
-    ui->tableView->setModel(model);
 
     for (int i=0;i<authorNames.size();i++){
         defaultAuthorSurname.push_back(authorNames[i][0]);

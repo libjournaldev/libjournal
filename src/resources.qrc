@@ -15,5 +15,6 @@
         <file>images/toReader.png</file>
         <file>card_template.html</file>
         <file>images/kpilogo.png</file>
+        <file>order_template.html</file>
     </qresource>
 </RCC>

@@ -3,6 +3,9 @@
 #include <QSqlRecord>
 #include <QStringList>
 #include <QDate>
+#include <QPrinter>
+#include <QTextDocument>
+#include <QtPrintSupport/QPrinter>
 
 orderBookDialog::orderBookDialog(QSqlRecord *rec , QWidget *parent) :
     QDialog(parent),
@@ -60,5 +63,62 @@ void orderBookDialog::on_orderBookDialog_accepted()
     query = new QSqlQuery(tr("INSERT INTO requestTable (readerID,bookID,status,endDate) VALUES (%1,%2,%3,'%4')")
                           .arg(ui->lineEdit->text(),QString::number(bookID),QString::number(type),date),activeDB);
 
+
+
+    QTextDocument card;
+    QString initialFile = ":/order_template.html";
+
+    if (!QFile::exists(initialFile)){
+        qDebug()<<"init";
+        return;
+    }
+    QFile file(initialFile);
+    if (!file.open(QFile::ReadOnly)){
+        qDebug()<<"read only";
+        return;
+    }
+
+    QByteArray data = file.readAll();
+    QTextCodec *codec = Qt::codecForHtml(data);
+    QString str = codec->toUnicode(data);
+
+    query = new QSqlQuery(tr("SELECT readerSurname "
+                  "FROM readerTable "
+                  "WHERE readerID = %1").arg(ui->lineEdit->text()),activeDB);
+    query->next();
+    QDate tmpDate = QDate::currentDate();
+    QString todaysDate = tmpDate.toString("yyyy-MM-dd");
+
+    str.replace("%readerSurname%",query->value(0).toString());
+    str.replace("%readerID%",ui->lineEdit->text());
+    str.replace("%date%",date);
+    str.replace("%bookUDKCode%",ui->labelUDKCode->text());
+    str.replace("%bookID%",tr("Книга инв.н. №%1").arg(QString::number(bookID)));
+    str.replace("%bookName%",ui->labelBookName->text());
+    str.replace("%authorSurname%",ui->labelAuthorNames->text());
+    str.replace("%todaysDate%",todaysDate);
+    str.replace("%sign%","Подпись: ______________________________");
+
+
+    if (Qt::mightBeRichText(str))
+        card.setHtml(str);
+    QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",
+                                                    QString(), "*.pdf");
+    if (!fileName.isEmpty()) {
+        if (QFileInfo(fileName).suffix().isEmpty())
+            fileName.append(".pdf");
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setOrientation(QPrinter::Landscape);
+        printer.setPaperSize(QPrinter::A6);
+        printer.setOutputFileName(fileName);
+
+        QSizeF paperSize;
+        paperSize.setWidth(printer.width());
+        paperSize.setHeight(printer.height());
+        card.setPageSize(paperSize);
+
+        card.print(&printer);
+    }
     delete query;
 }
